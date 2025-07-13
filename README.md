@@ -1,16 +1,6 @@
-# cashiru
+# CashiRu Mobile Apps
+<img  height="137" alt="cashiru_landscape_bggreycompressed2" src="https://github.com/user-attachments/assets/bd346230-fe95-4819-a8c9-62142b897bf0" />
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  
