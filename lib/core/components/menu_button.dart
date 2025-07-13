@@ -1,6 +1,5 @@
+import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos_responsive_app/core/components/spaces.dart';
-import 'package:flutter_pos_responsive_app/core/extensions/build_context_ext.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -26,8 +25,11 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(onTap: onPressed, borderRadius: const BorderRadius.all(Radius.circular(6.0)), child: Container(
-      width: context.deviceWidth,
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: const BorderRadius.all(Radius.circular(6.0)),
+      child: Container(
+        width: context.deviceWidth,
         padding: const EdgeInsets.all(8.0),
         margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
@@ -43,8 +45,7 @@ class MenuButton extends StatelessWidget {
             ),
           ],
         ),
-    )
-
-      );
+      ),
+    );
   }
 }
