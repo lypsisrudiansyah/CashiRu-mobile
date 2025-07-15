@@ -55,3 +55,6 @@ class User {
     "updated_at": updatedAt?.toIso8601String(),
   };
 }
+
+// write new class below fully covered these classes in this file. write unit tests for these classes
+
