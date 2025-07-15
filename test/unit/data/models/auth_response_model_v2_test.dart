@@ -74,6 +74,7 @@ void main() {
       expect(auth.message, "Success");
       expect(auth.token, "abc123");
       expect(auth.user?.name, "Alice");
+      expect(auth.user, isA<User>());
     });
 
     test('toMap should serialize correctly with nested User', () {
