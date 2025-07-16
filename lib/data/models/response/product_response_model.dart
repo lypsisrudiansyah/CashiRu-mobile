@@ -42,7 +42,7 @@ class Product {
     id: json["id"],
     name: json["name"],
     description: json["description"],
-    price: json["price"],
+    price: json["price"] ,
     categoryId: json["category_id"],
     image: json["image"],
     stock: json["stock"],
