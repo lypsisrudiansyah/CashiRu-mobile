@@ -12,6 +12,11 @@
 ✅ /CashiRu-mobile/test/unit/data/datasource/auth_local_datasource_test.dart: isAuthenticated returns false if no data
 ✅ /CashiRu-mobile/test/unit/data/datasource/auth_local_datasource_test.dart: clearAuthData removes data from SharedPreferences
 ✅ /CashiRu-mobile/test/unit/data/datasource/auth_local_datasource_test.dart: getAuthData returns AuthResponseModel with user data
+✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: login returns Right(AuthResponseModel) on 200
+✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: login returns Left with validation message on 422
+✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: logout returns Right on 200 and clears local data
+✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: logout returns Left on error
+✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: logout returns Left on 401 unauthenticated
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: User model fromMap creates correct User
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: User model toMap outputs correct map
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: User model fromJson and toJson round-trip
@@ -21,7 +26,6 @@
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: AuthResponseModel fromJson and toJson round-trip
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: AuthResponseModel fromMap handles null user
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_test.dart: AuthResponseModel fromMap handles missing fields
-✅ /CashiRu-mobile/test/unit/data/datasource/auth_remote_datasource_test.dart: login returns Right(AuthResponseModel) on 200
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_v2_test.dart: User model fromMap should parse correctly with full data
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_v2_test.dart: User model toMap should convert to correct map
 ✅ /CashiRu-mobile/test/unit/data/models/auth_response_model_v2_test.dart: User model User.fromMap throws FormatException when created_at is invalid
@@ -46,5 +50,5 @@
 ✅ /CashiRu-mobile/test/unit/data/models/summary_response_model_test.dart: Summary.fromMap parses correctly when total_sold_quantity is string
 ✅ /CashiRu-mobile/test/unit/data/models/summary_response_model_test.dart: Summary.fromMap throws if total_sold_quantity is string but not a number
 
-🎉 40 tests passed.
+🎉 44 tests passed.
 ```
