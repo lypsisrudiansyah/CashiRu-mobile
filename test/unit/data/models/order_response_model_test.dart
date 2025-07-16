@@ -87,7 +87,7 @@ void main() {
         "product": {
           "id": 99,
           "name": "Product A",
-          "price": 10000,
+          "price": "10000",
           "stock": 5,
           "created_at": "2024-07-10T08:00:00.000Z",
           "updated_at": "2024-07-15T10:00:00.000Z",
@@ -95,6 +95,8 @@ void main() {
       };
       final item = OrderItem.fromMap(map);
       expect(item.product, isA<Product>());
+      expect(item.product!.price, "10000");
+      expect(item.product!.price.runtimeType, String);
       expect(item.product!.name, "Product A");
       expect(item.createdAt, DateTime.parse("2024-07-14T09:00:00.000Z"));
     });
