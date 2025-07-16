@@ -6,8 +6,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthRemoteDatasource {
+  final AuthLocalDatasource _localDatasource;
+
+  AuthRemoteDatasource({AuthLocalDatasource? localDatasource}) : _localDatasource = localDatasource ?? AuthLocalDatasource();
+
   Future<Either<String, AuthResponseModel>> login(String email, String password) async {
-    final response = await http.post(
+    // final response = await http.post(
+    final response = await Variables.httpClient.post(
       Uri.parse('${Variables.baseUrl}/api/login'),
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       body: jsonEncode({'email': email, 'password': password}),
@@ -29,13 +34,16 @@ class AuthRemoteDatasource {
   }
 
   Future<Either<String, AuthResponseModel>> logout() async {
-    final authData = await AuthLocalDatasource().getAuthData();
-    final response = await http.post(Uri.parse('${Variables.baseUrl}/api/logout'), headers: {'Authorization': 'Bearer ${authData?.token}'});
+    final authData = await _localDatasource.getAuthData();
+    final response = await Variables.httpClient.post(
+      Uri.parse('${Variables.baseUrl}/api/logout'),
+      headers: {'Authorization': 'Bearer ${authData?.token}'},
+    );
     if (response.statusCode == 200) {
-      await AuthLocalDatasource().clearAuthData();
+      await _localDatasource.clearAuthData();
       return Right(AuthResponseModel(message: 'Logout successful'));
     } else {
-      return Left('Logout failed: ${response.reasonPhrase}');
+      return Left('Logout failed: ${response.reasonPhrase ?? response.statusCode}');
     }
   }
 }

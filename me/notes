@@ -7,5 +7,7 @@ grey prim : #C8D1E1
 primary : #3949AB
 
 
-flutter pub run build_runner build --build-filter="test/unit/data/**"
+dart run build_runner build --build-filter="test/unit/data/**"
+dart run build_runner build
 flutter test --reporter github test/unit/data/models
+flutter test --reporter github
