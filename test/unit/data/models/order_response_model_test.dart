@@ -26,7 +26,7 @@ void main() {
             "product": {
               "id": 99,
               "name": "Product A",
-              "price": 10000,
+              "price": "10000",
               "stock": 5,
               "created_at": "2024-07-10T08:00:00.000Z",
               "updated_at": "2024-07-15T10:00:00.000Z",
@@ -46,6 +46,7 @@ void main() {
       expect(order.createdAt, DateTime.parse("2024-07-14T09:00:00.000Z"));
       expect(order.id, 42);
       expect(order.orderItems, isA<List<OrderItem>>());
+      expect(order.orderItems![0].totalItem.runtimeType, String);
       expect(order.orderItems!.length, 1);
       expect(order.orderItems![0].product!.name, "Product A");
     });
