@@ -9,6 +9,10 @@ primary : #3949AB
 
 dart run build_runner build --build-filter="test/unit/data/**"
 dart run build_runner build --build-filter="test/unit/data/datasource**"
+dart run build_runner build --build-filter="lib/presentation/**"
+
+flutter pub run build_runner build
 dart run build_runner build
+
 flutter test --reporter github test/unit/data/models
 flutter test --reporter github
