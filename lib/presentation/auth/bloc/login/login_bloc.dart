@@ -1,6 +1,7 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:cashiru/data/datasource/auth_remote_datasource.dart';
+import 'package:cashiru/data/models/response/auth_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'login_event.dart';
