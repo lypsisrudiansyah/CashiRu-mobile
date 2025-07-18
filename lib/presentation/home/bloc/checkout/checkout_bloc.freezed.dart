@@ -234,12 +234,12 @@ _$AddCheckoutCopyWith<_AddCheckout> get copyWith => __$AddCheckoutCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddCheckout&&const DeepCollectionEquality().equals(other.product, product));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AddCheckout&&(identical(other.product, product) || other.product == product));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(product));
+int get hashCode => Object.hash(runtimeType,product);
 
 @override
 String toString() {
@@ -271,9 +271,9 @@ class __$AddCheckoutCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? product = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
   return _then(_AddCheckout(
-freezed == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
+null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
 as Product,
   ));
 }
@@ -300,12 +300,12 @@ _$RemoveCheckoutCopyWith<_RemoveCheckout> get copyWith => __$RemoveCheckoutCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveCheckout&&const DeepCollectionEquality().equals(other.product, product));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RemoveCheckout&&(identical(other.product, product) || other.product == product));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(product));
+int get hashCode => Object.hash(runtimeType,product);
 
 @override
 String toString() {
@@ -337,9 +337,9 @@ class __$RemoveCheckoutCopyWithImpl<$Res>
 
 /// Create a copy of CheckoutEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? product = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
   return _then(_RemoveCheckout(
-freezed == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
+null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
 as Product,
   ));
 }
