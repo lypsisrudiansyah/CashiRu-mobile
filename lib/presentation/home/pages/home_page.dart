@@ -1,5 +1,8 @@
 import 'package:cashiru/core/constants/colors.dart';
+import 'package:cashiru/core/extensions/build_context_extension.dart';
+import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/data/models/response/category_response_model.dart';
+import 'package:cashiru/presentation/auth/pages/login_page.dart';
 import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart' as product_bloc;
 import 'package:flutter/material.dart';
@@ -26,6 +29,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    // AuthLocalDatasource().clearAuthData();
+    // context.pushReplacement(const LoginPage());
     context.read<CategoryBloc>().add(const CategoryEvent.fetchCategories());
     context.read<product_bloc.ProductBloc>().add(const product_bloc.ProductEvent.fetchProducts());
     super.initState();
