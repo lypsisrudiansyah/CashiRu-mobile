@@ -1,3 +1,10 @@
+import 'package:cashiru/data/datasource/category_remote_datasource.dart';
+import 'package:cashiru/data/datasource/product_remote_datasource.dart';
+import 'package:cashiru/presentation/auth/bloc/login/login_bloc.dart';
+import 'package:cashiru/presentation/auth/bloc/logout/logout_bloc.dart';
+import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
+import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:cashiru/data/datasource/auth_remote_datasource.dart';
 import 'package:cashiru/data/datasource/auth_local_datasource.dart';
@@ -11,10 +18,14 @@ void setupServiceLocator() {
   // Datasources (singleton - satu instance untuk semua)
   getIt.registerLazySingleton<AuthLocalDatasource>(() => AuthLocalDatasource());
   getIt.registerLazySingleton<AuthRemoteDatasource>(() => AuthRemoteDatasource(localDatasource: getIt<AuthLocalDatasource>()));
-  // getIt.registerLazySingleton<CategoryRemoteDatasource>(() => CategoryRemoteDatasource());
+  getIt.registerLazySingleton<CategoryRemoteDatasource>(() => CategoryRemoteDatasource());
+  getIt.registerLazySingleton<ProductRemoteDatasource>(() => ProductRemoteDatasource(localDatasource: getIt<AuthLocalDatasource>()));
+
 
   // Blocs (factory - instance baru setiap kali dibutuhkan)
-  // getIt.registerFactory<LoginBloc>(() => LoginBloc(getIt<AuthRemoteDatasource>()));
-  // getIt.registerFactory<LogoutBloc>(() => LogoutBloc(getIt<AuthRemoteDatasource>()));
-  // getIt.registerFactory<CategoryBloc>(() => CategoryBloc(getIt<CategoryRemoteDatasource>()));
+  getIt.registerFactory<LoginBloc>(() => LoginBloc(getIt<AuthRemoteDatasource>()));
+  getIt.registerFactory<LogoutBloc>(() => LogoutBloc(getIt<AuthRemoteDatasource>()));
+  getIt.registerFactory<CategoryBloc>(() => CategoryBloc(getIt<CategoryRemoteDatasource>()));
+  getIt.registerFactory<ProductBloc>(() => ProductBloc(getIt<ProductRemoteDatasource>()));
+  getIt.registerFactory<CheckoutBloc>(() => CheckoutBloc());
 }

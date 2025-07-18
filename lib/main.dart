@@ -1,11 +1,23 @@
 import 'package:cashiru/core/constants/colors.dart';
+import 'package:cashiru/core/depedency_injection/service_locator.dart';
 import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:cashiru/data/datasource/auth_local_datasource.dart';
+import 'package:cashiru/presentation/auth/bloc/login/login_bloc.dart';
+import 'package:cashiru/presentation/auth/bloc/logout/logout_bloc.dart';
+import 'package:cashiru/presentation/auth/pages/login_page.dart';
+import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
+import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
+import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupServiceLocator();
+
   runApp(const MyApp());
 }
 
@@ -15,39 +27,49 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'CashiRu',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        useMaterial3: true,
-        textTheme: GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme),
-        appBarTheme: AppBarTheme(
-          color: AppColors.primary,
-          elevation: 0,
-          titleTextStyle: GoogleFonts.quicksand(
-            color: AppColors.white,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
+    return MultiBlocProvider(
+      providers: [
+        // calling BLoc also given GetIt ServiceLocator
+        BlocProvider(create: (_) => getIt<LoginBloc>()),
+        BlocProvider(create: (_) => getIt<CategoryBloc>()),
+        BlocProvider(create: (_) => getIt<LogoutBloc>()),
+        BlocProvider(create: (_) => getIt<ProductBloc>()),
+        BlocProvider(create: (_) => getIt<CheckoutBloc>()),
+      ],
+      child: MaterialApp(
+        title: 'CashiRu',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+          useMaterial3: true,
+          textTheme: GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme),
+          appBarTheme: AppBarTheme(
+            color: AppColors.primary,
+            elevation: 0,
+            titleTextStyle: GoogleFonts.quicksand(
+              color: AppColors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+            ),
+            iconTheme: const IconThemeData(color: AppColors.primary),
           ),
-          iconTheme: const IconThemeData(color: AppColors.primary),
         ),
-      ),
 
-      home: FutureBuilder<bool>(
-        future: AuthLocalDatasource().isAuthenticated(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasData && snapshot.data!) {
-            if (context.deviceWidth >= 600) {
-              // * Try This
+        home: FutureBuilder<bool>(
+          future: AuthLocalDatasource().isAuthenticated(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData && snapshot.data!) {
+              if (context.deviceWidth >= 600) {
+                // * Try This - ShouldBeTablet
+                return DashboardPage();
+              }
               return DashboardPage();
+            } else {
+              return LoginPage();
             }
-            return DashboardPage();
-          } else {
-            return Container();
-          }
-        },
+          },
+        ),
       ),
     );
   }
