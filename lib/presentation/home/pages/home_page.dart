@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primary,
-        title: const Text('Menu Cafe', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: const Text('Menu Kami', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
 
         centerTitle: true,
       ),
@@ -66,7 +66,9 @@ class _HomePageState extends State<HomePage> {
                     isActive: currentIndex == 0,
                     onPressed: () {
                       onCategoryTap(0);
-                      context.read<product_bloc.ProductBloc>().add(const product_bloc.ProductEvent.fetchProducts());
+                      context.read<product_bloc.ProductBloc>().add(
+                        const product_bloc.ProductEvent.fetchProducts(),
+                      );
                     },
                   ),
                 ),
@@ -90,7 +92,9 @@ class _HomePageState extends State<HomePage> {
                                 label: e.name ?? 'Category $index',
                                 isActive: currentIndex == index,
                                 onPressed: () {
-                                  context.read<product_bloc.ProductBloc>().add(product_bloc.ProductEvent.fetchProductsByCategory(e.id!));
+                                  context.read<product_bloc.ProductBloc>().add(
+                                    product_bloc.ProductEvent.fetchProductsByCategory(e.id!),
+                                  );
                                   onCategoryTap(index);
                                 },
                               ),
@@ -133,7 +137,22 @@ class _HomePageState extends State<HomePage> {
                   }
 
                 default:
-                  return const SizedBox.shrink();
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Assets.icons.orders.svg(width: 114.0),
+                        const SpaceHeight(4.0),
+                        const Text(
+                          'Belum ada Produk',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16, color: AppColors.grey),
+                        ),
+                      ],
+                    ),
+                  );
+                // return const SizedBox.shrink();
               }
             },
           ),
