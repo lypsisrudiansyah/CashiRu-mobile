@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   badges: ^3.1.2
+  cached_network_image: ^3.4.1
   dartz: ^0.10.1
   flutter_bloc: ^8.1.1
   flutter_gen_runner: ^5.10.0
