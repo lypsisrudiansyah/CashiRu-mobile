@@ -3,7 +3,6 @@ import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/data/models/response/auth_response_model.dart';
 import 'package:dartz/dartz.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class AuthRemoteDatasource {
   final AuthLocalDatasource _localDatasource;

@@ -3,7 +3,6 @@ import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/data/models/response/product_sales_response_model.dart';
 import 'package:cashiru/data/models/response/summary_response_model.dart';
 import 'package:dartz/dartz.dart';
-import 'package:http/http.dart' as http;
 
 class ReportRemoteDatasource {
   final AuthLocalDatasource _localDatasource;

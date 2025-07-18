@@ -2,7 +2,6 @@ import 'package:cashiru/core/constants/variables.dart';
 import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/data/models/response/product_response_model.dart';
 import 'package:dartz/dartz.dart';
-import 'package:http/http.dart' as http;
 
 class ProductRemoteDatasource {
   final AuthLocalDatasource _localDatasource;
