@@ -4,11 +4,10 @@ import 'package:cashiru/data/models/response/product_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 class ProductRemoteDatasource {
-    final AuthLocalDatasource _localDatasource;
-    ProductRemoteDatasource({AuthLocalDatasource? localDatasource})
-        : _localDatasource = localDatasource ?? AuthLocalDatasource();
+  final AuthLocalDatasource _localDatasource;
+  ProductRemoteDatasource({AuthLocalDatasource? localDatasource})
+    : _localDatasource = localDatasource ?? AuthLocalDatasource();
 
-  
   Future<Either<String, ProductResponseModel>> getProducts() async {
     final authData = await _localDatasource.getAuthData();
     final response = await Variables.httpClient.get(
