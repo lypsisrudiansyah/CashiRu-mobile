@@ -58,6 +58,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/qr_code.svg
   SvgGenImage get qrCode => const SvgGenImage('assets/icons/qr_code.svg');
 
+  /// File path: assets/icons/settings.svg
+  SvgGenImage get settings => const SvgGenImage('assets/icons/settings.svg');
+
   /// File path: assets/icons/snack.svg
   SvgGenImage get snack => const SvgGenImage('assets/icons/snack.svg');
 
@@ -77,6 +80,7 @@ class $AssetsIconsGen {
     payments,
     print,
     qrCode,
+    settings,
     snack,
   ];
 }

@@ -59,7 +59,10 @@ class MyApp extends StatelessWidget {
           future: AuthLocalDatasource().isAuthenticated(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Scaffold(
+                backgroundColor: Colors.white,
+                body: Center(child: CircularProgressIndicator()),
+              );
             } else if (snapshot.hasData && snapshot.data!) {
               if (context.deviceWidth >= 600) {
                 // * Try This - ShouldBeTablet

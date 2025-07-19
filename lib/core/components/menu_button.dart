@@ -1,6 +1,7 @@
+import 'package:cashiru/core/components/spaces.dart';
 import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../constants/colors.dart';
 
@@ -29,19 +30,53 @@ class MenuButton extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(6.0)),
       child: Container(
         width: context.deviceWidth,
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
           color: isActive ? AppColors.primary : AppColors.white,
           borderRadius: const BorderRadius.all(Radius.circular(6.0)),
           boxShadow: [
             BoxShadow(
-              offset: const Offset(0, 4),
+              // offset: const Offset(0, 6),
               blurRadius: 20.0,
               blurStyle: BlurStyle.outer,
               spreadRadius: 0,
-              color: AppColors.black.withOpacity(0.1),
+              color: AppColors.primary.withOpacity(0.5),
             ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SpaceHeight(8.0),
+            isImage
+                ? Image.asset(
+                    iconPath,
+                    width: size,
+                    height: size,
+                    fit: BoxFit.contain,
+                    color: isActive ? AppColors.white : AppColors.primary,
+                  )
+                : SvgPicture.asset(
+                    iconPath,
+                    colorFilter: ColorFilter.mode(
+                      isActive ? AppColors.white : AppColors.primary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+            const SpaceHeight(8.0),
+            // text size 20, isActive AppColors.white, not active AppColors.primary
+            Flexible(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
+                  color: isActive ? AppColors.white : AppColors.primary,
+                ),
+              ),
+            ), 
           ],
         ),
       ),
