@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cashiru/core/constants/colors.dart';
 import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:cashiru/data/datasource/auth_local_datasource.dart';
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   final searchController = TextEditingController();
   final indexValue = ValueNotifier(0);
   int currentIndex = 0;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -34,6 +37,13 @@ class _HomePageState extends State<HomePage> {
     context.read<CategoryBloc>().add(const CategoryEvent.fetchCategories());
     context.read<product_bloc.ProductBloc>().add(const product_bloc.ProductEvent.fetchProducts());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    _debounce?.cancel();
+    super.dispose();
   }
 
   void onCategoryTap(int index) {
@@ -55,16 +65,27 @@ class _HomePageState extends State<HomePage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          SearchInput(controller: searchController, onChanged: (value) {}),
+          SearchInput(
+            controller: searchController,
+            onChanged: (value) {
+              if (_debounce?.isActive ?? false) _debounce!.cancel();
+              _debounce = Timer(const Duration(milliseconds: 300), () {
+                context.read<product_bloc.ProductBloc>().add(
+                  product_bloc.ProductEvent.searchProducts(value),
+                );
+              });
+            },
+          ),
           const SpaceHeight(16.0),
           SizedBox(
             height: 90,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                SizedBox(
+                Container(
                   height: 80,
-                  width: 90,
+                  width: 95,
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
                   child: MenuButton(
                     iconPath: Assets.icons.allCategories.path,
                     label: 'All',
@@ -77,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                const SpaceWidth(10.0),
+                const SpaceWidth(0.0),
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (context, state) {
                     switch (state) {

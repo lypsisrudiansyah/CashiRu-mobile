@@ -31,7 +31,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
-    // on : _SearchProducts
     on<_SearchProducts>((event, emit) async {
       emit(Loading());
       final result = products.where((product) => product.name!.toLowerCase().contains(event.query.toLowerCase())).toList();

@@ -71,7 +71,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => _onItemTapped(2),
             ),
             NavItem(
-              iconPath: Assets.icons.dashboard.path,
+              iconPath: Assets.icons.settings.path,
               label: 'Setting',
               isActive: _selectedIndex == 3,
               onTap: () => _onItemTapped(3),
