@@ -42,15 +42,23 @@ class ProductCard extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(12.0),
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.disabled.withOpacity(0.4)),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.disabled.withOpacity(0.4),
+                  ),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(50.0)),
                     child: CachedNetworkImage(
                       height: 50,
                       fit: BoxFit.fitWidth,
                       imageUrl: '${Variables.imageBaseUrl}${data.image}',
-                      placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => const Icon(Icons.food_bank_outlined, size: 50),
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(
+                        Icons.food_bank_outlined,
+                        size: 50,
+                        color: AppColors.primary.withValues(alpha: 0.7),
+                      ),
                     ),
                   ),
                 ),
@@ -61,8 +69,11 @@ class ProductCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SpaceHeight(8.0),
-                Text(data.category?.name ?? '', style: const TextStyle(color: AppColors.grey, fontSize: 12)),
+                const SpaceHeight(2.0),
+                Text(
+                  data.category?.name ?? '',
+                  style: const TextStyle(color: AppColors.grey, fontSize: 12),
+                ),
                 const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

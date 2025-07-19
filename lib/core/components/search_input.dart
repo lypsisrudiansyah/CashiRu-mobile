@@ -11,7 +11,10 @@ class SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(8.0)),
+      decoration: BoxDecoration(color: AppColors.white, border: Border.all(
+                        width: 1.0,
+                        color: AppColors.green.withValues(alpha: 0.2),
+                      ), borderRadius: BorderRadius.circular(8.0)),
       child: TextFormField(
         onTap: onTap,
         readOnly: onTap != null,
@@ -20,12 +23,12 @@ class SearchInput extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Search...',
           prefixIcon: const Icon(Icons.search, color: AppColors.primary),
-          suffixIcon: InkWell(
-            onTap: () {
-              // context.push(const ScannerPage());
-            },
-            child: const Icon(Icons.qr_code_2, color: AppColors.primary),
-          ),
+          // suffixIcon: InkWell(
+          //   onTap: () {
+          //     // context.push(const ScannerPage());
+          //   },
+          //   child: const Icon(Icons.qr_code_2, color: AppColors.primary),
+          // ),
           contentPadding: const EdgeInsets.all(16.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),

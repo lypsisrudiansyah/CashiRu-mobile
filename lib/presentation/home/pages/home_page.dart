@@ -103,7 +103,10 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     switch (state) {
                       case Loading():
-                        return const Center(child: CircularProgressIndicator());
+                        return Container(
+                          margin: const EdgeInsets.only(left: 16.0),
+                          child: const Center(child: CircularProgressIndicator()),
+                        );
                       case Failure(message: String message):
                         return Center(child: Text(message));
                       case Success(categories: List<Category> categories):
@@ -144,21 +147,21 @@ class _HomePageState extends State<HomePage> {
                   return const Center(child: CircularProgressIndicator());
                 case product_bloc.Failure(message: String message):
                   return Center(child: Text(message));
-                case product_bloc.Success(products: List dummyProducts):
-                  if (dummyProducts.isEmpty) {
+                case product_bloc.Success(products: List dataProducts):
+                  if (dataProducts.isEmpty) {
                     return const Center(child: Text('No products available'));
                   } else {
                     return GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: dummyProducts.length,
+                      itemCount: dataProducts.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 0.75,
                         crossAxisCount: 2,
                         crossAxisSpacing: 16.0,
                         mainAxisSpacing: 16.0,
                       ),
-                      itemBuilder: (context, index) => ProductCard(data: dummyProducts[index]),
+                      itemBuilder: (context, index) => ProductCard(data: dataProducts[index]),
                     );
                   }
 

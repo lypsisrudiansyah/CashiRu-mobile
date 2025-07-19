@@ -41,7 +41,8 @@ class MenuButton extends StatelessWidget {
               blurRadius: 20.0,
               blurStyle: BlurStyle.outer,
               spreadRadius: 0,
-              color: AppColors.primary.withOpacity(0.5),
+              // color: AppColors.primary.withOpacity(0.9),
+              color: AppColors.primary.withValues(alpha: 0.35)
             ),
           ],
         ),
@@ -70,6 +71,8 @@ class MenuButton extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14.0,
                   fontWeight: FontWeight.w500,
