@@ -22,6 +22,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/cash.svg
   SvgGenImage get cash => const SvgGenImage('assets/icons/cash.svg');
 
+  /// File path: assets/icons/chart.svg
+  SvgGenImage get chart => const SvgGenImage('assets/icons/chart.svg');
+
   /// File path: assets/icons/dashboard.svg
   SvgGenImage get dashboard => const SvgGenImage('assets/icons/dashboard.svg');
 
@@ -46,6 +49,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/image.svg
   SvgGenImage get image => const SvgGenImage('assets/icons/image.svg');
 
+  /// File path: assets/icons/manage_product.svg
+  SvgGenImage get manageProduct =>
+      const SvgGenImage('assets/icons/manage_product.svg');
+
   /// File path: assets/icons/orders.svg
   SvgGenImage get orders => const SvgGenImage('assets/icons/orders.svg');
 
@@ -64,10 +71,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/snack.svg
   SvgGenImage get snack => const SvgGenImage('assets/icons/snack.svg');
 
+  /// File path: assets/icons/sync.svg
+  SvgGenImage get sync => const SvgGenImage('assets/icons/sync.svg');
+
   /// List of all assets
   List<SvgGenImage> get values => [
     allCategories,
     cash,
+    chart,
     dashboard,
     debit,
     delete,
@@ -76,12 +87,14 @@ class $AssetsIconsGen {
     history,
     home,
     image,
+    manageProduct,
     orders,
     payments,
     print,
     qrCode,
     settings,
     snack,
+    sync,
   ];
 }
 

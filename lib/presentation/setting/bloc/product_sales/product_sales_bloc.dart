@@ -10,6 +10,7 @@ part 'product_sales_state.dart';
 class ProductSalesBloc extends Bloc<ProductSalesEvent, ProductSalesState> {
   final ReportRemoteDatasource reportRemoteDatasource;
   ProductSalesBloc(this.reportRemoteDatasource) : super(Initial()) {
+    //
     on<_GetProductSalesReport>((event, emit) async {
       emit(Loading());
       final result = await reportRemoteDatasource.getProductSales(event.startDate, event.endDate);

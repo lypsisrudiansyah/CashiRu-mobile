@@ -9,19 +9,14 @@ part 'summary_bloc.freezed.dart';
 
 class SummaryBloc extends Bloc<SummaryEvent, SummaryState> {
   final ReportRemoteDatasource reportRemoteDatasource;
-  
+
   SummaryBloc(this.reportRemoteDatasource) : super(Initial()) {
+    // 
     on<_GetSummary>((event, emit) async {
       emit(Loading());
-      final result = await reportRemoteDatasource.getSummaryReport(
-        event.startDate,
-        event.endDate,
-      );
+      final result = await reportRemoteDatasource.getSummaryReport(event.startDate, event.endDate);
 
-      result.fold(
-        (error) => emit(Error(error)),
-        (summary) => emit(Loaded(summary)),
-      );
+      result.fold((error) => emit(Error(error)), (summary) => emit(Loaded(summary)));
     });
   }
 }
