@@ -14,3 +14,14 @@ extension IntegerExt on int {
         decimalDigits: 0,
       ).format(this);
 }
+
+extension CurrencyFormat on num {
+  String get currencyFormatRp {
+    final formatCurrency = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+      decimalDigits: 0,
+    );
+    return formatCurrency.format(this);
+  }
+}
