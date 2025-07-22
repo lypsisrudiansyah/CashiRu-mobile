@@ -35,25 +35,30 @@ class HistoryTransactionCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(0.0),
         ),
         title: Wrap(
-  spacing: 12.0, // jarak horizontal antar item
-  runSpacing: 8.0, // jarak vertikal antar baris
-  crossAxisAlignment: WrapCrossAlignment.center,
-  children: [
-    Assets.icons.payments.svg(),
-    Text(
-      '${data.createdAt!.toFormattedTime()} - ${data.paymentMethod! == 'QR' ? 'QRIS' : data.paymentMethod! == 'TRANSFER' ? 'TRANSFER' : 'Cash'}',
-      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-    ),
-    Text(
-      double.parse(data.total!).toInt().currencyFormatRp,
-      style: const TextStyle(
-        color: AppColors.green,
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
-  ],
-),
+          spacing: 12.0, // vertical spacing for each item
+          // * Try This
+          runSpacing: 8.0, //  spacing for every rows/line
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Assets.icons.payments.svg(),
+            Text(
+              '${data.createdAt!.toFormattedTime()} - ${data.paymentMethod! == 'QR'
+                  ? 'QRIS'
+                  : data.paymentMethod! == 'TRANSFER'
+                  ? 'TRANSFER'
+                  : 'Cash'}',
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+            ),
+            Text(
+              double.parse(data.total!).toInt().currencyFormatRp,
+              style: const TextStyle(
+                color: AppColors.green,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
         children: [
           ListView.builder(
             shrinkWrap: true,
@@ -62,12 +67,7 @@ class HistoryTransactionCard extends StatelessWidget {
             itemBuilder: (context, index) {
               if (index == data.orderItems!.length) {
                 return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 4.0,
-                    left: 16,
-                    right: 16,
-                    bottom: 16,
-                  ),
+                  padding: const EdgeInsets.only(top: 4.0, left: 16, right: 16, bottom: 16),
                   child: Button.filled(
                     onPressed: () async {
                       // print receipt
@@ -89,12 +89,9 @@ class HistoryTransactionCard extends StatelessWidget {
               final item = data.orderItems![index];
               return ListTile(
                 title: Text(item.product!.name ?? 'Product ${index + 1}'),
-                subtitle: Text(
-                  '${item.quantity} x ${item.product!.price?.currencyFormatRp}',
-                ),
+                subtitle: Text('${item.quantity} x ${item.product!.price?.currencyFormatRp}'),
                 trailing: Text(
-                  '${item.quantity! * item.product!.price!.toIntegerFromText}'
-                      .currencyFormatRp,
+                  '${item.quantity! * item.product!.price!.toIntegerFromText}'.currencyFormatRp,
                   style: const TextStyle(
                     color: AppColors.green,
                     fontSize: 16,
