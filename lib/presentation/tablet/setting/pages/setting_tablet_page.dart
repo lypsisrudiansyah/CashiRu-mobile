@@ -5,7 +5,6 @@ import 'package:cashiru/core/constants/colors.dart';
 import 'package:cashiru/presentation/tablet/setting/pages/manage_printer_tablet_page.dart';
 import 'package:cashiru/presentation/tablet/setting/pages/report_tablet_page.dart';
 
-
 class SettingTabletPage extends StatefulWidget {
   const SettingTabletPage({super.key});
 
@@ -50,26 +49,20 @@ class _SettingTabletPageState extends State<SettingTabletPage> {
                   const SpaceHeight(16.0),
                   ListTile(
                     contentPadding: const EdgeInsets.all(12.0),
-                    leading: Image.asset(Assets.images.managePrinter.path,
-                        fit: BoxFit.contain),
+                    leading: Image.asset(Assets.icons.print.path, fit: BoxFit.contain),
                     title: const Text('Manage Printer'),
                     subtitle: const Text('Manage printer in your store'),
                     textColor: AppColors.primary,
-                    tileColor: currentIndex == 0
-                        ? AppColors.blueLight
-                        : Colors.transparent,
+                    tileColor: currentIndex == 0 ? AppColors.blueLight : Colors.transparent,
                     onTap: () => indexValue(0),
                   ),
                   ListTile(
                     contentPadding: const EdgeInsets.all(12.0),
-                    leading: Image.asset(Assets.images.report.path,
-                        fit: BoxFit.contain),
+                    leading: Image.asset(Assets.icons.chart.path, fit: BoxFit.contain),
                     title: const Text('Report'),
                     subtitle: const Text('Show report data'),
                     textColor: AppColors.primary,
-                    tileColor: currentIndex == 1
-                        ? AppColors.blueLight
-                        : Colors.transparent,
+                    tileColor: currentIndex == 1 ? AppColors.blueLight : Colors.transparent,
                     onTap: () => indexValue(1),
                   ),
                 ],
@@ -86,10 +79,7 @@ class _SettingTabletPageState extends State<SettingTabletPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: IndexedStack(
                   index: currentIndex,
-                  children: [
-                    const ManagePrinterTabletPage(),
-                    const ReportTabletPage(),
-                  ],
+                  children: [const ManagePrinterTabletPage(), const ReportTabletPage()],
                 ),
               ),
             ),
