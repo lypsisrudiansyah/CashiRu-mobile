@@ -1,7 +1,8 @@
+import 'package:cashiru/core/constants/variables.dart';
 import 'package:flutter/material.dart';
 import 'package:cashiru/core/components/search_input.dart';
 import 'package:cashiru/core/constants/colors.dart';
-import 'package:cashiru/core/extensions/date_time_ext.dart';
+import 'package:cashiru/core/extensions/date_time_extension.dart';
 
 
 
@@ -24,7 +25,7 @@ class HomeTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'POS App',
+              Variables.nameApp,
               style: TextStyle(
                 color: AppColors.primary,
                 fontSize: 22,

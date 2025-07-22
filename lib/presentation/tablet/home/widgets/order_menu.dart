@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos_responsive_app/core/components/spaces.dart';
-import 'package:flutter_pos_responsive_app/core/constants/variables.dart';
-import 'package:flutter_pos_responsive_app/core/extensions/int_ext.dart';
-import 'package:flutter_pos_responsive_app/core/extensions/string_ext.dart';
-import 'package:flutter_pos_responsive_app/presentation/home/models/order_item.dart';
+import 'package:cashiru/core/components/spaces.dart';
+import 'package:cashiru/core/constants/variables.dart';
+import 'package:cashiru/core/extensions/int_extension.dart';
+import 'package:cashiru/presentation/home/models/order_item.dart';
 
 import '../../../../core/constants/colors.dart';
 
+// * Try This
 class OrderMenu extends StatelessWidget {
   final OrderItem data;
   const OrderMenu({super.key, required this.data});
