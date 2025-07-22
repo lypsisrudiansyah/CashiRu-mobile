@@ -1,6 +1,5 @@
+import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos_responsive_app/core/extensions/build_context_ext.dart';
-
 
 import '../../../core/constants/colors.dart';
 
@@ -41,9 +40,7 @@ class MenuPrinterButton extends StatelessWidget {
           child: Text(
             label,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isActive ? AppColors.primary : AppColors.black,
-            ),
+            style: TextStyle(color: isActive ? AppColors.primary : AppColors.black),
           ),
         ),
       ),

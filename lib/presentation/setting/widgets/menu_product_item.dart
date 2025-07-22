@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pos_responsive_app/core/extensions/build_context_ext.dart';
-import 'package:flutter_pos_responsive_app/data/models/response/product_response_model.dart';
+import 'package:cashiru/core/extensions/build_context_extension.dart';
+import 'package:cashiru/data/models/response/product_response_model.dart';
 
 
 import '../../../core/components/buttons.dart';

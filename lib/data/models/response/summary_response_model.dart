@@ -4,10 +4,7 @@ class SummaryResponseModel {
   final String status;
   final Summary data;
 
-  SummaryResponseModel({
-    required this.status,
-    required this.data,
-  });
+  SummaryResponseModel({required this.status, required this.data});
 
   factory SummaryResponseModel.fromMap(Map<String, dynamic> map) {
     return SummaryResponseModel(
@@ -24,17 +21,15 @@ class Summary {
   final int totalRevenue;
   final int totalSoldQuantity;
 
-  Summary({
-    required this.totalRevenue,
-    required this.totalSoldQuantity,
-  });
+  Summary({required this.totalRevenue, required this.totalSoldQuantity});
 
   factory Summary.fromMap(Map<String, dynamic> map) {
     return Summary(
-        totalRevenue: map['total_revenue'] as int,
-        totalSoldQuantity: map['total_sold_quantity'] is String
-            ? int.parse(map['total_sold_quantity'])
-            : map['total_sold_quantity']);
+      totalRevenue: map['total_revenue'] as int,
+      totalSoldQuantity: map['total_sold_quantity'] is String
+          ? int.parse(map['total_sold_quantity'])
+          : map['total_sold_quantity'],
+    );
   }
 
   factory Summary.fromJson(String source) =>
