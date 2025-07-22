@@ -13,12 +13,7 @@ class OrderCard extends StatelessWidget {
   final VoidCallback onDeleteTap;
   final EdgeInsetsGeometry? padding;
 
-  const OrderCard({
-    super.key,
-    required this.data,
-    required this.onDeleteTap,
-    this.padding,
-  });
+  const OrderCard({super.key, required this.data, required this.onDeleteTap, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +39,7 @@ class OrderCard extends StatelessWidget {
                   height: 76,
                   fit: BoxFit.cover,
                   imageUrl: '${Variables.imageBaseUrl}${data.product.image}',
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
+                  placeholder: (context, url) => const CircularProgressIndicator(),
                   errorWidget: (context, url, error) =>
                       const Icon(Icons.food_bank_outlined, size: 80),
                 ),
@@ -58,9 +52,16 @@ class OrderCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          data.product.name!,
-                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        // * Try This
+                        // Text(
+                        //   data.product.name!,
+                        //   style: const TextStyle(fontWeight: FontWeight.w700),
+                        // ),
+                        Flexible(
+                          child: Text(
+                            data.product.name!,
+                            style: const TextStyle(fontWeight: FontWeight.w700),
+                          ),
                         ),
                         Text(
                           data.product.price!,
@@ -80,17 +81,12 @@ class OrderCard extends StatelessWidget {
                             },
                             child: Container(
                               color: AppColors.white,
-                              child: const Icon(
-                                Icons.remove_circle,
-                                color: AppColors.primary,
-                              ),
+                              child: const Icon(Icons.remove_circle, color: AppColors.primary),
                             ),
                           ),
                           SizedBox(
                             width: 40.0,
-                            child: Center(
-                              child: Text(data.quantity.toString()),
-                            ),
+                            child: Center(child: Text(data.quantity.toString())),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -100,10 +96,7 @@ class OrderCard extends StatelessWidget {
                             },
                             child: Container(
                               color: AppColors.white,
-                              child: const Icon(
-                                Icons.add_circle,
-                                color: AppColors.primary,
-                              ),
+                              child: const Icon(Icons.add_circle, color: AppColors.primary),
                             ),
                           ),
                         ],

@@ -1,9 +1,12 @@
+import 'package:cashiru/data/dataoutput/printer_service.dart';
 import 'package:cashiru/data/models/response/history_response_model.dart';
+import 'package:cashiru/presentation/home/models/order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cashiru/core/components/buttons.dart';
 import 'package:cashiru/core/extensions/date_time_extension.dart';
 import 'package:cashiru/core/extensions/int_extension.dart';
 import 'package:cashiru/core/extensions/string_extension.dart';
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 import '../../../../core/assets/assets.gen.dart';
 import '../../../../core/constants/colors.dart';
@@ -34,6 +37,7 @@ class HistoryTransactionCard extends StatelessWidget {
           side: BorderSide.none,
           borderRadius: BorderRadius.circular(0.0),
         ),
+        // * Try This - Should Be Implement - Later Change to Row
         title: Wrap(
           spacing: 12.0, // vertical spacing for each item
           // * Try This
@@ -81,7 +85,20 @@ class HistoryTransactionCard extends StatelessWidget {
                       //   'Customer',
                       // );
                       // CwbPrint.instance.printReceipt(printInt);
+                      final orderItems = data.orderItems!.map((e) {
+                        return OrderItem(quantity: e.quantity!, product: e.product!);
+                      }).toList();
+
+                      final printValue = await PrinterService.instance.printOrder(
+                        data.paymentMethod?.toString() ?? '',
+                        orderItems,
+                        data.totalQuantity ?? 0,
+                        double.parse(data.total!).toInt(),
+                      );
+
+                      await PrintBluetoothThermal.writeBytes(printValue);
                     },
+
                     label: 'Print Receipt',
                   ),
                 );
@@ -89,9 +106,13 @@ class HistoryTransactionCard extends StatelessWidget {
               final item = data.orderItems![index];
               return ListTile(
                 title: Text(item.product!.name ?? 'Product ${index + 1}'),
-                subtitle: Text('${item.quantity} x ${item.product!.price?.currencyFormatRp}'),
+                // subtitle: Text('${item.quantity} x ${item.product!.price?.currencyFormatRp}'),
+                subtitle: Text(
+                  '${item.quantity} x ${double.parse(item.product!.price!).toInt().currencyFormatRp}',
+                ),
                 trailing: Text(
-                  '${item.quantity! * item.product!.price!.toIntegerFromText}'.currencyFormatRp,
+                  // '${item.quantity! * item.product!.price!.toIntegerFromText}'.currencyFormatRp,
+                  '${item.quantity! * double.parse(item.product!.price!).toInt()}',
                   style: const TextStyle(
                     color: AppColors.green,
                     fontSize: 16,

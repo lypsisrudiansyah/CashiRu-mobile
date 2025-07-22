@@ -1,3 +1,4 @@
+import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashiru/core/extensions/build_context_extension.dart';
@@ -5,6 +6,7 @@ import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:cashiru/presentation/home/models/order_item.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
 import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart' as order_bloc;
+import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/menu_button.dart';
@@ -28,6 +30,20 @@ class _OrderPageState extends State<OrderPage> {
   @override
   void initState() {
     super.initState();
+    _connectDefaultPrinter();
+  }
+
+  Future<void> _connectDefaultPrinter() async {
+    final defaultPrinter = await AuthLocalDatasource().getDefaultPrinter();
+    if (defaultPrinter != null) {
+      bool isConnected = await PrintBluetoothThermal.connectionStatus;
+      if (!isConnected) {
+        final connected = await PrintBluetoothThermal.connect(
+          macPrinterAddress: defaultPrinter.macAddress,
+        );
+        print("Printer default connected: $connected");
+      }
+    }
   }
 
   @override
