@@ -1,3 +1,5 @@
+import 'package:cashiru/presentation/setting/pages/manage_printer_page.dart';
+import 'package:cashiru/presentation/setting/pages/report_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashiru/core/constants/colors.dart';
