@@ -10,8 +10,7 @@ part 'order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final OrderRemoteDatasource orderRemoteDatasource;
-  OrderBloc(this.orderRemoteDatasource)
-    : super(const Success('', 0, [], 0, 0)) {
+  OrderBloc(this.orderRemoteDatasource) : super(const Success('', 0, [], 0, 0)) {
     on<_AddPaymentMethod>((event, emit) async {
       emit(const Loading());
       try {
@@ -50,5 +49,5 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<_Started>((event, emit) {
       emit(const Success('', 0, [], 0, 0));
     });
-    }
+  }
 }
