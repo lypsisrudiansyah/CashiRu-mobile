@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
+import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart' as order_bloc;
+import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cashiru/core/assets/assets.gen.dart';
@@ -157,14 +159,14 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                 return const Center(child: CircularProgressIndicator());
                               case product_bloc.Failure(message: String message):
                                 return Center(child: Text(message));
-                              case product_bloc.Success(products: List dummyProducts):
-                                if (dummyProducts.isEmpty) {
+                              case product_bloc.Success(products: List productData):
+                                if (productData.isEmpty) {
                                   return const Center(child: Text('No products available'));
                                 } else {
                                   return GridView.builder(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: dummyProducts.length,
+                                    itemCount: productData.length,
                                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                       childAspectRatio: 0.8,
                                       crossAxisCount: 3,
@@ -172,7 +174,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       mainAxisSpacing: 16.0,
                                     ),
                                     itemBuilder: (context, index) =>
-                                        ProductCard(data: dummyProducts[index]),
+                                        ProductCard(data: productData[index]),
                                   );
                                 }
 
@@ -310,8 +312,21 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       label: 'CASH',
                                       isActive: value == 1,
                                       onPressed: () {
-                                        log("Payment Cash");
                                         indexValuePayment.value = 1;
+
+                                        final theState = context
+                                            .read<checkout_bloc.CheckoutBloc>()
+                                            .state;
+                                        if (theState is checkout_bloc.Success) {
+                                          context.read<order_bloc.OrderBloc>().add(
+                                            order_bloc.OrderEvent.addPaymentMethod(
+                                              'CASH',
+                                              theState.products,
+                                              theState.qty,
+                                              theState.total,
+                                            ),
+                                          );
+                                        }
                                       },
                                     ),
                                   ),
@@ -324,6 +339,20 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       onPressed: () {
                                         indexValuePayment.value = 2;
                                         log("Payment QRIS");
+
+                                        final theState = context
+                                            .read<checkout_bloc.CheckoutBloc>()
+                                            .state;
+                                        if (theState is checkout_bloc.Success) {
+                                          context.read<order_bloc.OrderBloc>().add(
+                                            order_bloc.OrderEvent.addPaymentMethod(
+                                              'QR',
+                                              theState.products,
+                                              theState.qty,
+                                              theState.total,
+                                            ),
+                                          );
+                                        }
                                       },
                                     ),
                                   ),
@@ -336,6 +365,20 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       onPressed: () {
                                         indexValuePayment.value = 3;
                                         log("Payment TRANSFER");
+
+                                        final theState = context
+                                            .read<checkout_bloc.CheckoutBloc>()
+                                            .state;
+                                        if (theState is checkout_bloc.Success) {
+                                          context.read<order_bloc.OrderBloc>().add(
+                                            order_bloc.OrderEvent.addPaymentMethod(
+                                              'TRANSFER',
+                                              theState.products,
+                                              theState.qty,
+                                              theState.total,
+                                            ),
+                                          );
+                                        }
                                       },
                                     ),
                                   ),
@@ -346,91 +389,102 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                           const SpaceHeight(8.0),
                           const Divider(),
                           const SpaceHeight(8.0),
-                          Column(
-                            children: [
-                              const SpaceHeight(12.0),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          BlocBuilder<checkout_bloc.CheckoutBloc, checkout_bloc.CheckoutState>(
+                            builder: (context, state) {
+                              int finalTotalPrice = state is checkout_bloc.Success
+                                  ? state.total
+                                  : 0;
+                              return Column(
                                 children: [
-                                  const Text(
-                                    'Total',
-                                    style: TextStyle(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    1000000.currencyFormatRp,
-                                    style: const TextStyle(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  const SpaceHeight(12.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text(
+                                        'Total',
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        finalTotalPrice.currencyFormatRp,
+                                        style: const TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
-                              ),
-                            ],
+                              );
+                            },
                           ),
                           const SpaceHeight(100.0),
                         ],
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: isOpenBill
-                          ? Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Button.filled(
-                                onPressed: () async {
-                                  //open bill success snack bar
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Save Draft Order Success'),
-                                      backgroundColor: AppColors.primary,
-                                    ),
-                                  );
-
-                                  context.pushReplacement(
-                                    // * Try This - ShouldBeTablet
-                                    const DashboardPage(),
-                                  );
-                                },
-                                label: 'Save & Print',
-                                fontSize: 14,
-                                height: 52,
-                                width: context.deviceWidth,
-                              ),
-                            )
-                          : ColoredBox(
-                              color: AppColors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24.0,
-                                  vertical: 16.0,
-                                ),
-                                child: Button.filled(
-                                  onPressed: () {
-                                    if (indexValuePayment.value == 0) {
-                                    } else if (indexValuePayment.value == 1) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            PaymentCashDialog(price: finaltotal, isTablet: true),
+                    BlocBuilder<checkout_bloc.CheckoutBloc, checkout_bloc.CheckoutState>(
+                      builder: (context, state) {
+                        int finalTotalPrice = state is checkout_bloc.Success ? state.total : 0;
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: isOpenBill
+                              ? Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Button.filled(
+                                    onPressed: () async {
+                                      //open bill success snack bar
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Save Draft Order Success'),
+                                          backgroundColor: AppColors.primary,
+                                        ),
                                       );
-                                    } else if (indexValuePayment.value == 2) {
-                                      // showDialog(
-                                      //   context: context,
-                                      //   barrierDismissible: false,
-                                      //   builder: (context) => PaymentQrisDialog(
-                                      //     price: finaltotal,
-                                      //     isTablet: true,
-                                      //   ),
-                                      // );
-                                    }
-                                  },
-                                  label: 'Payment',
+
+                                      context.pushReplacement(const DashboardTabletPage());
+                                    },
+                                    label: 'Save & Print',
+                                    fontSize: 14,
+                                    height: 52,
+                                    width: context.deviceWidth,
+                                  ),
+                                )
+                              : ColoredBox(
+                                  color: AppColors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0,
+                                      vertical: 16.0,
+                                    ),
+                                    child: Button.filled(
+                                      onPressed: () {
+                                        if (indexValuePayment.value == 0) {
+                                        } else if (indexValuePayment.value == 1) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => PaymentCashDialog(
+                                              price: finalTotalPrice,
+                                              isTablet: true,
+                                            ),
+                                          );
+                                        } else if (indexValuePayment.value == 2) {
+                                          // showDialog(
+                                          //   context: context,
+                                          //   barrierDismissible: false,
+                                          //   builder: (context) => PaymentQrisDialog(
+                                          //     price: finalTotalPrice,
+                                          //     isTablet: true,
+                                          //   ),
+                                          // );
+                                        }
+                                      },
+                                      label: 'Payment',
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                        );
+                      },
                     ),
                   ],
                 ),
