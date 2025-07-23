@@ -268,7 +268,7 @@ class _ReportPageState extends State<ReportPage> {
                             int totalQty = 0;
                             int total = 0;
                             for (var element in productSalesResponse.data) {
-                              total += element.total.toIntegerFromText;
+                              total += element.total.toInt();
                               totalQty += element.totalQuantity.toIntegerFromText;
                             }
                             if (productSalesResponse.data.isEmpty) {
@@ -419,7 +419,7 @@ class _ReportPageState extends State<ReportPage> {
                   height: 52,
                   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                   alignment: Alignment.centerLeft,
-                  child: Center(child: Text(productSales.total.toIntegerFromText.currencyFormatRp)),
+                  child: Center(child: Text(productSales.total.currencyFormatRp)),
                 ),
               ],
             );

@@ -7,10 +7,10 @@ class MenuPrinterContent extends StatelessWidget {
   final BluetoothInfo data;
   final bool isSelected;
   const MenuPrinterContent({
-    Key? key,
+    super.key,
     required this.data,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
