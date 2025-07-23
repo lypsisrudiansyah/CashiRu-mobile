@@ -9,16 +9,12 @@ class ProductSalesResponseModel {
   factory ProductSalesResponseModel.fromMap(Map<String, dynamic> map) {
     return ProductSalesResponseModel(
       status: map['status'] as String,
-      data: List<ProductSales>.from(
-        map["data"].map((x) => ProductSales.fromMap(x)),
-      ),
+      data: List<ProductSales>.from(map["data"].map((x) => ProductSales.fromMap(x))),
     );
   }
 
   factory ProductSalesResponseModel.fromJson(String source) =>
-      ProductSalesResponseModel.fromMap(
-        json.decode(source) as Map<String, dynamic>,
-      );
+      ProductSalesResponseModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class ProductSales {
@@ -26,7 +22,7 @@ class ProductSales {
   final String productName;
   final int productPrice;
   final String totalQuantity;
-  final String total;
+  final double total;
 
   ProductSales({
     required this.productId,
@@ -42,7 +38,7 @@ class ProductSales {
       productName: map['product_name'] as String,
       productPrice: double.parse(map['product_price'] as String).toInt(),
       totalQuantity: map['total_quantity'] as String,
-      total: map['total'] as String,
+      total: double.parse(map['total_price']),
     );
   }
 
