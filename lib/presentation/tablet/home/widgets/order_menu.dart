@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cashiru/core/components/spaces.dart';
 import 'package:cashiru/core/constants/variables.dart';
 import 'package:cashiru/core/extensions/int_extension.dart';
 import 'package:cashiru/presentation/home/models/order_item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/colors.dart';
 
@@ -30,8 +32,7 @@ class OrderMenu extends StatelessWidget {
                     height: 40,
                     fit: BoxFit.fill,
                     imageUrl: '${Variables.imageBaseUrl}${data.product.image}',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.food_bank_outlined, size: 40),
                   ),
@@ -40,10 +41,7 @@ class OrderMenu extends StatelessWidget {
                   data.product.name!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 ),
                 subtitle: Text(data.product.price!),
               ),
@@ -51,31 +49,26 @@ class OrderMenu extends StatelessWidget {
             Row(
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.read<CheckoutBloc>().add(CheckoutEvent.removeCheckout(data.product));
+                  },
                   child: Container(
                     width: 30,
                     height: 30,
                     color: AppColors.white,
-                    child: const Icon(
-                      Icons.remove_circle,
-                      color: AppColors.primary,
-                    ),
+                    child: const Icon(Icons.remove_circle, color: AppColors.primary),
                   ),
                 ),
-                SizedBox(
-                  width: 30.0,
-                  child: Center(child: Text(data.quantity.toString())),
-                ),
+                SizedBox(width: 30.0, child: Center(child: Text(data.quantity.toString()))),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.read<CheckoutBloc>().add(CheckoutEvent.addCheckout(data.product));
+                  },
                   child: Container(
                     width: 30,
                     height: 30,
                     color: AppColors.white,
-                    child: const Icon(
-                      Icons.add_circle,
-                      color: AppColors.primary,
-                    ),
+                    child: const Icon(Icons.add_circle, color: AppColors.primary),
                   ),
                 ),
               ],
@@ -84,13 +77,9 @@ class OrderMenu extends StatelessWidget {
             SizedBox(
               width: 80.0,
               child: Text(
-                (double.parse(data.product.price!).toInt() * data.quantity)
-                    .currencyFormatRp,
+                (double.parse(data.product.price!).toInt() * data.quantity).currencyFormatRp,
                 textAlign: TextAlign.right,
-                style: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w500),
               ),
             ),
           ],
