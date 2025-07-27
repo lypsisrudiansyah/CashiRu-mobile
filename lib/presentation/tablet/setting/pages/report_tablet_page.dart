@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cashiru/data/models/response/product_sales_response_model.dart';
+import 'package:cashiru/presentation/setting/bloc/product_sales/product_sales_bloc.dart' as product_sales;
+import 'package:cashiru/presentation/setting/bloc/summary/summary_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cashiru/core/components/spaces.dart';
@@ -10,6 +12,7 @@ import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:cashiru/core/extensions/int_extension.dart';
 import 'package:cashiru/core/extensions/string_extension.dart';
 import 'package:cashiru/presentation/tablet/setting/widgets/setting_title.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:horizontal_data_table/horizontal_data_table.dart';
 import 'package:intl/intl.dart';
 
@@ -21,9 +24,8 @@ class ReportTabletPage extends StatefulWidget {
   @override
   State<ReportTabletPage> createState() => _ReportTabletPageState();
 }
-
 class _ReportTabletPageState extends State<ReportTabletPage> {
-  DateTime selectedStartDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
+  DateTime selectedStartDate = DateTime.now().subtract(const Duration(days: 1));
   DateTime selectedEndDate = DateTime.now();
   List<ProductSales> productSales = [];
   Summary? summary;
@@ -33,6 +35,13 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
     super.initState();
     String startDate = DateFormat('yyyy-MM-dd').format(selectedStartDate);
     String endDate = DateFormat('yyyy-MM-dd').format(selectedEndDate);
+    context.read<SummaryBloc>().add(
+      SummaryEvent.getSummary(startDate, endDate),
+    );
+
+    context.read<product_sales.ProductSalesBloc>().add(
+      product_sales.ProductSalesEvent.getProductSalesReport(startDate, endDate),
+    );
   }
 
   Future<void> _selectStartDate(BuildContext context) async {
@@ -78,7 +87,11 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                   Row(
                     children: [
                       Text(
-                        DateFormat('dd MMM yyyy').format(selectedStartDate),
+                        selectedStartDate == null
+                            ? ''
+                            : DateFormat(
+                              'dd MMM yyyy',
+                            ).format(selectedStartDate),
                         style: const TextStyle(color: AppColors.primary, fontSize: 12.0),
                       ),
                       IconButton(
@@ -94,7 +107,9 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        DateFormat('dd MMM yyyy').format(selectedEndDate),
+                        selectedEndDate == null
+                            ? ''
+                            : DateFormat('dd MMM yyyy').format(selectedEndDate),
                         style: const TextStyle(color: AppColors.primary, fontSize: 12.0),
                       ),
                       IconButton(
@@ -112,6 +127,17 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                           onPressed: () {
                             String startDate = DateFormat('yyyy-MM-dd').format(selectedStartDate);
                             String endDate = DateFormat('yyyy-MM-dd').format(selectedEndDate);
+
+                            context.read<SummaryBloc>().add(
+                              SummaryEvent.getSummary(startDate, endDate),
+                            );
+                            context.read<product_sales.ProductSalesBloc>().add(
+                              product_sales
+                                  .ProductSalesEvent.getProductSalesReport(
+                                startDate,
+                                endDate,
+                              ),
+                            );
                           },
                           label: "Filter",
                         ),
@@ -168,26 +194,53 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                   children: [
                     const SettingsTitle("Summary"),
                     const SpaceHeight(16.0),
-                    Column(
-                      children: [
-                        buildPrice('Total Quantity', '1'),
-                        const SpaceHeight(8),
-                        buildPrice('Total', '10000000'),
-                        const SpaceHeight(8),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Sold Items", style: TextStyle(color: AppColors.primary)),
-                            Text(
-                              "1 items",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    BlocBuilder<SummaryBloc, SummaryState>(
+                      builder: (context, state) {
+                        switch (state) {
+                          case Loading():
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case Loaded(summary: SummaryResponseModel summary):
+                            return Column(
+                              children: [
+                                buildPrice(
+                                  'Total Quantity',
+                                  "${summary.data.totalRevenue}",
+                                ),
+                                const SpaceHeight(8),
+                                buildPrice(
+                                  'Total',
+                                  summary.data.totalRevenue.toString(),
+                                ),
+                                const SpaceHeight(8),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Sold Items",
+                                      style: TextStyle(
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                    Text(
+                                      "${summary.data.totalSoldQuantity} items",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          case _:
+                            return const Center(
+                              child: Text('No data available'),
+                            );
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -212,41 +265,76 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                   children: [
                     const SettingsTitle("Product Sales"),
                     const SpaceHeight(16.0),
-                    Column(
-                      children: [
-                        // * Try This - Should Be Implement
-                        tableProductSales(dummyProductSalesResponse),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Total",
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
+                    BlocBuilder<
+                      product_sales.ProductSalesBloc,
+                      product_sales.ProductSalesState
+                    >(
+                      builder: (context, state) {
+                        switch (state) {
+                          case product_sales.Loading():
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case product_sales.Loaded(
+                            productSales: ProductSalesResponseModel
+                            productSalesResponse,
+                          ):
+                            productSales = productSalesResponse.data;
+                            int totalQty = 0;
+                            int totalPrice = 0;
+                            for (var element
+                                in productSalesResponse.data) {
+                              totalPrice += element.total.toInt();
+                              totalQty +=
+                                  element.totalQuantity.toIntegerFromText;
+                            }
+                            if (productSalesResponse.data.isEmpty) {
+                              return const Center(
+                                child: Text('No product sales data available'),
+                              );
+                            }
+                            return Column(
+                              children: [
+                                tableProductSales(productSalesResponse),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 4,
+                                    horizontal: 16,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Total",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        "$totalQty items",
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SpaceWidth(24),
+                                      Text(
+                                        totalPrice.currencyFormatRp,
+                                        style: TextStyle(
+                                          color: AppColors.primary,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                "10",
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SpaceWidth(24),
-                              Text(
-                                "1000000",
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                              ],
+                            );
+                          default:
+                            return const SizedBox.shrink();
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -279,28 +367,28 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
         productName: "Nasi Goreng Spesial",
         productPrice: 25000,
         totalQuantity: "35", // Total terjual 35 porsi
-        total: (25000 * 35).toString(), // "875000"
+        total: (25000 * 35), // "875000"
       ),
       ProductSales(
         productId: 303,
         productName: "Kopi Susu Gula Aren",
         productPrice: 22000,
         totalQuantity: "52", // Total terjual 52 gelas
-        total: (22000 * 52).toString(), // "1144000"
+        total: (22000 * 52), // "1144000"
       ),
       ProductSales(
         productId: 102,
         productName: "Sate Ayam Madura",
         productPrice: 30000,
         totalQuantity: "28", // Total terjual 28 porsi
-        total: (30000 * 28).toString(), // "840000"
+        total: (30000 * 28), // "840000"
       ),
       ProductSales(
         productId: 201,
         productName: "Pisang Goreng Keju",
         productPrice: 15000,
         totalQuantity: "45", // Total terjual 45 porsi
-        total: (15000 * 45).toString(), // "675000"
+        total: (15000 * 45), // "675000"
       ),
     ],
   );
@@ -385,7 +473,7 @@ class _ReportTabletPageState extends State<ReportTabletPage> {
                   height: 52,
                   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                   alignment: Alignment.centerLeft,
-                  child: Center(child: Text(productSales.total.toIntegerFromText.currencyFormatRp)),
+                  child: Center(child: Text(productSales.total.currencyFormatRp)),
                 ),
               ],
             );
