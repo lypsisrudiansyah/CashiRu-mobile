@@ -9,6 +9,7 @@ import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
 import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart';
+import 'package:cashiru/presentation/setting/bloc/product_sales/product_sales_bloc.dart';
 import 'package:cashiru/presentation/setting/bloc/summary/summary_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:cashiru/data/datasource/auth_remote_datasource.dart';
@@ -38,4 +39,5 @@ void setupServiceLocator() {
   getIt.registerFactory<OrderBloc>(() => OrderBloc(getIt<OrderRemoteDatasource>()));
   getIt.registerFactory<HistoryBloc>(() => HistoryBloc(getIt<OrderRemoteDatasource>()));
   getIt.registerFactory<SummaryBloc>(() => SummaryBloc(getIt<ReportRemoteDatasource>()));
+  getIt.registerFactory<ProductSalesBloc>(() => ProductSalesBloc(getIt<ReportRemoteDatasource>()));
 }
