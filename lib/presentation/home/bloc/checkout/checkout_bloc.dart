@@ -48,6 +48,31 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
       emit(Success(newCheckout, total, totalQuantity));
     });
 
+    on<_DeleteItemCheckout>((event, emit) {
+        print("Masuk DeleteITEM");
+
+      var currentStates = state as Success;
+      List<OrderItem> newCheckout = [...currentStates.products];
+
+      final index = newCheckout.indexWhere((element) => (element.product.id) == event.product.id);
+      if (index != -1) {
+        newCheckout.removeAt(index);
+      } else {
+        print("Masuk Failure");
+        emit(Failure("Cannot Find Order Item for this Action."));
+      }
+        print("Lolos IF ELSE");
+      int totalQuantity = 0;
+      int total = 0;
+      for (var element in newCheckout) {
+        totalQuantity += element.quantity;
+        total += element.quantity * double.parse(element.product.price!).toInt();
+      }
+      // emit(Failure("There is no order item for this Action."));
+
+      emit(Success(newCheckout, total, totalQuantity));
+    });
+
     on<_Started>((event, emit) {
       emit(const Success([], 0, 0));
     });

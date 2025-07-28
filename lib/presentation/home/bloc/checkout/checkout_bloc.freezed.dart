@@ -55,13 +55,14 @@ extension CheckoutEventPatterns on CheckoutEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddCheckout value)?  addCheckout,TResult Function( _RemoveCheckout value)?  removeCheckout,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _AddCheckout value)?  addCheckout,TResult Function( _RemoveCheckout value)?  removeCheckout,TResult Function( _DeleteItemCheckout value)?  deleteItemCheckout,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddCheckout() when addCheckout != null:
 return addCheckout(_that);case _RemoveCheckout() when removeCheckout != null:
-return removeCheckout(_that);case _:
+return removeCheckout(_that);case _DeleteItemCheckout() when deleteItemCheckout != null:
+return deleteItemCheckout(_that);case _:
   return orElse();
 
 }
@@ -79,13 +80,14 @@ return removeCheckout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddCheckout value)  addCheckout,required TResult Function( _RemoveCheckout value)  removeCheckout,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _AddCheckout value)  addCheckout,required TResult Function( _RemoveCheckout value)  removeCheckout,required TResult Function( _DeleteItemCheckout value)  deleteItemCheckout,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _AddCheckout():
 return addCheckout(_that);case _RemoveCheckout():
-return removeCheckout(_that);case _:
+return removeCheckout(_that);case _DeleteItemCheckout():
+return deleteItemCheckout(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -102,13 +104,14 @@ return removeCheckout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddCheckout value)?  addCheckout,TResult? Function( _RemoveCheckout value)?  removeCheckout,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _AddCheckout value)?  addCheckout,TResult? Function( _RemoveCheckout value)?  removeCheckout,TResult? Function( _DeleteItemCheckout value)?  deleteItemCheckout,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _AddCheckout() when addCheckout != null:
 return addCheckout(_that);case _RemoveCheckout() when removeCheckout != null:
-return removeCheckout(_that);case _:
+return removeCheckout(_that);case _DeleteItemCheckout() when deleteItemCheckout != null:
+return deleteItemCheckout(_that);case _:
   return null;
 
 }
@@ -125,12 +128,13 @@ return removeCheckout(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( Product product)?  addCheckout,TResult Function( Product product)?  removeCheckout,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( Product product)?  addCheckout,TResult Function( Product product)?  removeCheckout,TResult Function( Product product)?  deleteItemCheckout,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddCheckout() when addCheckout != null:
 return addCheckout(_that.product);case _RemoveCheckout() when removeCheckout != null:
-return removeCheckout(_that.product);case _:
+return removeCheckout(_that.product);case _DeleteItemCheckout() when deleteItemCheckout != null:
+return deleteItemCheckout(_that.product);case _:
   return orElse();
 
 }
@@ -148,12 +152,13 @@ return removeCheckout(_that.product);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( Product product)  addCheckout,required TResult Function( Product product)  removeCheckout,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( Product product)  addCheckout,required TResult Function( Product product)  removeCheckout,required TResult Function( Product product)  deleteItemCheckout,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case _AddCheckout():
 return addCheckout(_that.product);case _RemoveCheckout():
-return removeCheckout(_that.product);case _:
+return removeCheckout(_that.product);case _DeleteItemCheckout():
+return deleteItemCheckout(_that.product);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -170,12 +175,13 @@ return removeCheckout(_that.product);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( Product product)?  addCheckout,TResult? Function( Product product)?  removeCheckout,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( Product product)?  addCheckout,TResult? Function( Product product)?  removeCheckout,TResult? Function( Product product)?  deleteItemCheckout,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case _AddCheckout() when addCheckout != null:
 return addCheckout(_that.product);case _RemoveCheckout() when removeCheckout != null:
-return removeCheckout(_that.product);case _:
+return removeCheckout(_that.product);case _DeleteItemCheckout() when deleteItemCheckout != null:
+return deleteItemCheckout(_that.product);case _:
   return null;
 
 }
@@ -339,6 +345,72 @@ class __$RemoveCheckoutCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
   return _then(_RemoveCheckout(
+null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
+as Product,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _DeleteItemCheckout implements CheckoutEvent {
+  const _DeleteItemCheckout(this.product);
+  
+
+ final  Product product;
+
+/// Create a copy of CheckoutEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$DeleteItemCheckoutCopyWith<_DeleteItemCheckout> get copyWith => __$DeleteItemCheckoutCopyWithImpl<_DeleteItemCheckout>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeleteItemCheckout&&(identical(other.product, product) || other.product == product));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,product);
+
+@override
+String toString() {
+  return 'CheckoutEvent.deleteItemCheckout(product: $product)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$DeleteItemCheckoutCopyWith<$Res> implements $CheckoutEventCopyWith<$Res> {
+  factory _$DeleteItemCheckoutCopyWith(_DeleteItemCheckout value, $Res Function(_DeleteItemCheckout) _then) = __$DeleteItemCheckoutCopyWithImpl;
+@useResult
+$Res call({
+ Product product
+});
+
+
+
+
+}
+/// @nodoc
+class __$DeleteItemCheckoutCopyWithImpl<$Res>
+    implements _$DeleteItemCheckoutCopyWith<$Res> {
+  __$DeleteItemCheckoutCopyWithImpl(this._self, this._then);
+
+  final _DeleteItemCheckout _self;
+  final $Res Function(_DeleteItemCheckout) _then;
+
+/// Create a copy of CheckoutEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? product = null,}) {
+  return _then(_DeleteItemCheckout(
 null == product ? _self.product : product // ignore: cast_nullable_to_non_nullable
 as Product,
   ));
