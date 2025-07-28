@@ -15,10 +15,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<_AddPaymentMethod>((event, emit) async {
       emit(const Loading());
       try {
-        // Simulate a delay for loading
         await Future.delayed(const Duration(seconds: 1));
 
-        // Emit success state with payment method and order details
         emit(
           Success(
             event.paymentMethod,
@@ -35,7 +33,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
 
     on<_AddNominal>((event, emit) {
       var currentState = state as Success;
-      // Update the nominal bayar in the current state
+      // Update the amount pay in the current state
       emit(
         Success(
           currentState.paymentMethod,

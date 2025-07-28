@@ -5,6 +5,7 @@ import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:cashiru/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:cashiru/presentation/auth/pages/login_page.dart';
+import 'package:cashiru/presentation/history/bloc/history/history_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<ProductBloc>()),
         BlocProvider(create: (_) => getIt<CheckoutBloc>()),
         BlocProvider(create: (_) => getIt<OrderBloc>()),
+        BlocProvider(create: (_) => getIt<HistoryBloc>()),
       ],
       child: MaterialApp(
         title: 'CashiRu',
