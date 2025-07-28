@@ -11,10 +11,11 @@ class SearchInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: AppColors.white, border: Border.all(
-                        width: 1.0,
-                        color: AppColors.green.withValues(alpha: 0.2),
-                      ), borderRadius: BorderRadius.circular(8.0)),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        border: Border.all(width: 1.0, color: AppColors.blueLight.withValues(alpha: 0.02)),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
       child: TextFormField(
         onTap: onTap,
         readOnly: onTap != null,
