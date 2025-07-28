@@ -11,6 +11,7 @@ import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
 import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart';
+import 'package:cashiru/presentation/setting/bloc/summary/summary_bloc.dart';
 import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<CheckoutBloc>()),
         BlocProvider(create: (_) => getIt<OrderBloc>()),
         BlocProvider(create: (_) => getIt<HistoryBloc>()),
+        BlocProvider(create: (_) => getIt<SummaryBloc>()),
       ],
       child: MaterialApp(
         title: 'CashiRu',
