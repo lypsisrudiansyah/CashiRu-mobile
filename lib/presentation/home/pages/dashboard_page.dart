@@ -1,4 +1,7 @@
+import 'package:cashiru/presentation/history/pages/history_page.dart';
 import 'package:cashiru/presentation/home/pages/home_page.dart';
+import 'package:cashiru/presentation/order/pages/order_page.dart';
+import 'package:cashiru/presentation/setting/pages/setting_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/assets/assets.gen.dart';
@@ -17,9 +20,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    // const OrderPage(), // Placeholder for HomePage
-    // const HistoryPage(),
-    // const SettingPage(),
+    const OrderPage(),
+    const HistoryPage(),
+    const SettingPage()
   ];
 
   void _onItemTapped(int index) {

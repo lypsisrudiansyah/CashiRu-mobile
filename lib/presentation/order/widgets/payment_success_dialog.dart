@@ -7,6 +7,7 @@ import 'package:cashiru/presentation/home/models/order_item.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
 import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart' as order_bloc;
 import 'package:cashiru/presentation/order/widgets/label_value_widget.dart';
+import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
@@ -77,7 +78,7 @@ class PaymentSuccessDialog extends StatelessWidget {
                             isTablet
                                 ? context.pushReplacement(
                                     // * Try This - ShouldBeTablet
-                                    const DashboardPage(),
+                                    const DashboardTabletPage(),
                                   )
                                 : context.pushReplacement(
                                     const DashboardPage(),

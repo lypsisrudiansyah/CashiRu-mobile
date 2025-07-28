@@ -334,8 +334,9 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                   Flexible(
                                     child: MenuButton(
                                       iconPath: Assets.icons.qrCode.path,
-                                      label: 'QR',
+                                      label: 'QR 2',
                                       isActive: value == 2,
+                                      // size: 2,
                                       onPressed: () {
                                         indexValuePayment.value = 2;
                                         log("Payment QRIS");
@@ -469,6 +470,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                             ),
                                           );
                                         } else if (indexValuePayment.value == 2) {
+                                          // Todo : Implement Another Type Dialog
                                           // showDialog(
                                           //   context: context,
                                           //   barrierDismissible: false,
