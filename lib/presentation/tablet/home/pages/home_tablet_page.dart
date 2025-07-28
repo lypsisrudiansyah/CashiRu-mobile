@@ -85,11 +85,11 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                       children: [
                         HomeTitle(
                           controller: searchController,
-                          onChanged: (val) {
+                          onChanged: (value) {
                             if (_debounce?.isActive ?? false) _debounce!.cancel();
                             _debounce = Timer(const Duration(milliseconds: 300), () {
                               context.read<product_bloc.ProductBloc>().add(
-                                product_bloc.ProductEvent.searchProducts(val),
+                                product_bloc.ProductEvent.searchProducts(value),
                               );
                             });
                           },

@@ -4,6 +4,7 @@ import 'package:cashiru/core/components/spaces.dart';
 import 'package:cashiru/core/constants/colors.dart';
 import 'package:cashiru/presentation/tablet/setting/pages/manage_printer_tablet_page.dart';
 import 'package:cashiru/presentation/tablet/setting/pages/report_tablet_page.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SettingTabletPage extends StatefulWidget {
   const SettingTabletPage({super.key});
@@ -49,7 +50,8 @@ class _SettingTabletPageState extends State<SettingTabletPage> {
                   const SpaceHeight(16.0),
                   ListTile(
                     contentPadding: const EdgeInsets.all(12.0),
-                    leading: Image.asset(Assets.icons.print.path, fit: BoxFit.contain),
+                    // leading: Image.asset(Assets.icons.print.path, fit: BoxFit.contain),
+                    leading: SvgPicture.asset(Assets.icons.print.path, fit: BoxFit.contain),
                     title: const Text('Manage Printer'),
                     subtitle: const Text('Manage printer in your store'),
                     textColor: AppColors.primary,
@@ -58,7 +60,7 @@ class _SettingTabletPageState extends State<SettingTabletPage> {
                   ),
                   ListTile(
                     contentPadding: const EdgeInsets.all(12.0),
-                    leading: Image.asset(Assets.icons.chart.path, fit: BoxFit.contain),
+                    leading: SvgPicture.asset(Assets.icons.chart.path, fit: BoxFit.contain),
                     title: const Text('Report'),
                     subtitle: const Text('Show report data'),
                     textColor: AppColors.primary,

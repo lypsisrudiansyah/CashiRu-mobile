@@ -9,6 +9,8 @@ import 'dart:typed_data' as _i6;
 
 import 'package:cashiru/data/datasource/auth_local_datasource.dart' as _i7;
 import 'package:cashiru/data/models/response/auth_response_model.dart' as _i8;
+import 'package:cashiru/data/models/response/printer_response_model.dart'
+    as _i9;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i5;
@@ -258,6 +260,73 @@ class MockAuthLocalDatasource extends _i1.Mock
   _i3.Future<void> clearAuthData() =>
       (super.noSuchMethod(
             Invocation.method(#clearAuthData, []),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<void> saveSizeReceipt(String? sizeReceipt) =>
+      (super.noSuchMethod(
+            Invocation.method(#saveSizeReceipt, [sizeReceipt]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<String> getSizeReceipt() =>
+      (super.noSuchMethod(
+            Invocation.method(#getSizeReceipt, []),
+            returnValue: _i3.Future<String>.value(
+              _i5.dummyValue<String>(
+                this,
+                Invocation.method(#getSizeReceipt, []),
+              ),
+            ),
+          )
+          as _i3.Future<String>);
+
+  @override
+  _i3.Future<void> savePrinters(List<_i9.PrinterModel>? printers) =>
+      (super.noSuchMethod(
+            Invocation.method(#savePrinters, [printers]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<List<_i9.PrinterModel>> getPrinters() =>
+      (super.noSuchMethod(
+            Invocation.method(#getPrinters, []),
+            returnValue: _i3.Future<List<_i9.PrinterModel>>.value(
+              <_i9.PrinterModel>[],
+            ),
+          )
+          as _i3.Future<List<_i9.PrinterModel>>);
+
+  @override
+  _i3.Future<void> setDefaultPrinter(_i9.PrinterModel? printer) =>
+      (super.noSuchMethod(
+            Invocation.method(#setDefaultPrinter, [printer]),
+            returnValue: _i3.Future<void>.value(),
+            returnValueForMissingStub: _i3.Future<void>.value(),
+          )
+          as _i3.Future<void>);
+
+  @override
+  _i3.Future<_i9.PrinterModel?> getDefaultPrinter() =>
+      (super.noSuchMethod(
+            Invocation.method(#getDefaultPrinter, []),
+            returnValue: _i3.Future<_i9.PrinterModel?>.value(),
+          )
+          as _i3.Future<_i9.PrinterModel?>);
+
+  @override
+  _i3.Future<void> clearDefaultPrinter() =>
+      (super.noSuchMethod(
+            Invocation.method(#clearDefaultPrinter, []),
             returnValue: _i3.Future<void>.value(),
             returnValueForMissingStub: _i3.Future<void>.value(),
           )
