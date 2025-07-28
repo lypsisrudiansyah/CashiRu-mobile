@@ -54,3 +54,5 @@
 ```
 
 ### flutter\\versions\\3.32.3
+
+### Open to full-time roles, freelance projects, or job opportunities, feel free to reach out via email: rudiansyahether@gmail.com
