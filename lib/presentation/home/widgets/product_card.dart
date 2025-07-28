@@ -102,8 +102,8 @@ class ProductCard extends StatelessWidget {
         BlocBuilder<CheckoutBloc, CheckoutState>(
           builder: (context, state) {
             switch (state) {
-              case Failure(message: String message):
-                return Center(child: Text(message));
+              // case Failure(message: String message):
+              //   return Center(child: Text(message));
               case Success(products: List<OrderItem> products, total: int _, qty: int _):
                 if (products.any((element) => element.product.id == data.id)) {
                   var index = products.indexWhere((element) => element.product.id == data.id);

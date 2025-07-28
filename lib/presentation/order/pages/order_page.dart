@@ -46,9 +46,37 @@ class _OrderPageState extends State<OrderPage> {
     }
   }
 
+  Widget _buildCheckoutContent(List products, int qty) {
+    const paddingHorizontal = EdgeInsets.symmetric(horizontal: 16.0);
+
+    return qty == 0
+        ? _buildEmptyCart()
+        : ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            itemCount: products.length,
+            separatorBuilder: (context, index) => const SpaceHeight(20.0),
+            itemBuilder: (context, index) => OrderCard(
+              padding: paddingHorizontal,
+              data: products[index],
+              onDeleteTap: () {
+                context.read<CheckoutBloc>().add(
+                  CheckoutEvent.deleteItemCheckout(products[index].product),
+                );
+              },
+            ),
+          );
+  }
+
+  Widget _buildEmptyCart() {
+    return Center(
+      child: Text('No items in the cart', style: TextStyle(fontSize: 16, color: Colors.black54)),
+    );
+  }
+
+  Success? _previousSuccessState;
+
   @override
   Widget build(BuildContext context) {
-    const paddingHorizontal = EdgeInsets.symmetric(horizontal: 16.0);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -63,31 +91,38 @@ class _OrderPageState extends State<OrderPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<CheckoutBloc, CheckoutState>(
+      body: BlocConsumer<CheckoutBloc, CheckoutState>(
+        listener: (context, state) {
+          if (state is Failure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+                behavior: SnackBarBehavior.floating,
+                duration: Duration(seconds: 3),
+              ),
+            );
+          }
+        },
         builder: (context, state) {
+          if (state is Success) {
+            _previousSuccessState = state; // Simpan state success terakhir
+          }
+
           switch (state) {
             case Success(products: List products, total: int _, qty: int qty):
-              return qty == 0
-                  ? Center(
-                      child: Text(
-                        'No items in the cart',
-                        style: TextStyle(fontSize: 16, color: Colors.black54),
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      itemCount: products.length,
-                      separatorBuilder: (context, index) => const SpaceHeight(20.0),
-                      itemBuilder: (context, index) => OrderCard(
-                        padding: paddingHorizontal,
-                        data: products[index],
-                        onDeleteTap: () {
-                          context.read<CheckoutBloc>().add(
-                            CheckoutEvent.removeCheckout(products[index].product),
-                          );
-                        },
-                      ),
-                    );
+              return _buildCheckoutContent(products, qty);
+            case Failure():
+              // Tetap tampilkan konten terakhir dari success state
+              // atau tampilkan placeholder dengan tombol retry
+              if (_previousSuccessState != null && _previousSuccessState!.products.isNotEmpty) {
+                return _buildCheckoutContent(
+                  _previousSuccessState!.products,
+                  _previousSuccessState!.qty,
+                );
+              } else {
+                return _buildEmptyCart();
+              }
             case _:
               return SizedBox.shrink();
           }
