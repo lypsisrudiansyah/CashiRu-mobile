@@ -324,6 +324,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       iconPath: Assets.icons.cash.path,
                                       label: 'CASH',
                                       isActive: value == 1,
+                                      size: 90,
                                       onPressed: () {
                                         indexValuePayment.value = 1;
 
@@ -349,6 +350,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       iconPath: Assets.icons.qrCode.path,
                                       label: 'QR',
                                       isActive: value == 2,
+                                      size: 90,
                                       // size: 2,
                                       onPressed: () {
                                         indexValuePayment.value = 2;
@@ -376,6 +378,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                       iconPath: Assets.icons.debit.path,
                                       label: 'TRANSFER',
                                       isActive: value == 3,
+                                      size: 90,
                                       onPressed: () {
                                         indexValuePayment.value = 3;
                                         log("Payment TRANSFER");

@@ -81,7 +81,7 @@ class OrderCard extends StatelessWidget {
                             },
                             child: Container(
                               color: AppColors.white,
-                              child: const Icon(Icons.remove_circle, color: AppColors.primary),
+                              child:  Icon(Icons.remove_circle, color: AppColors.red.withValues(alpha: .75)),
                             ),
                           ),
                           SizedBox(

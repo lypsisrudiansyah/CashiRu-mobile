@@ -83,7 +83,7 @@ class _OrderPageState extends State<OrderPage> {
                         data: products[index],
                         onDeleteTap: () {
                           context.read<CheckoutBloc>().add(
-                            CheckoutEvent.removeCheckout(products[index]),
+                            CheckoutEvent.removeCheckout(products[index].product),
                           );
                         },
                       ),

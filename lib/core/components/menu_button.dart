@@ -20,7 +20,7 @@ class MenuButton extends StatelessWidget {
     this.isActive = false,
     required this.onPressed,
     this.isImage = false,
-    this.size = 90,
+    this.size = 35,
   });
 
   @override
