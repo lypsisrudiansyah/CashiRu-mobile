@@ -34,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.all(16.0),
+        padding: context.deviceWidth > 600 ? EdgeInsets.symmetric(horizontal: 150, vertical: 16) : const EdgeInsets.all(16.0),
         children: [
-          const SpaceHeight(80.0),
+          const SpaceHeight(60.0),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.deviceHeight >= 600 ? 400 : 58.0),
+            padding: EdgeInsets.symmetric(horizontal: context.deviceHeight >= 600 ? 290 : 58.0),
             child: Image.asset(Assets.images.logo.path),
           ),
           const SpaceHeight(24.0),

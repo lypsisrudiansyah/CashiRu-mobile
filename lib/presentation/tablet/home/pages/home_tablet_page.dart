@@ -296,7 +296,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                               )
                                             : ListView.separated(
                                                 shrinkWrap: true,
-                                                physics: const NeverScrollableScrollPhysics(),
+                                                physics: const ClampingScrollPhysics(),
                                                 itemBuilder: (context, index) =>
                                                     OrderMenu(data: products[index]),
                                                 separatorBuilder: (context, index) =>
@@ -347,7 +347,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                   Flexible(
                                     child: MenuButton(
                                       iconPath: Assets.icons.qrCode.path,
-                                      label: 'QR 2',
+                                      label: 'QR',
                                       isActive: value == 2,
                                       // size: 2,
                                       onPressed: () {
