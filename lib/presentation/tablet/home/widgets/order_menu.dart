@@ -56,7 +56,7 @@ class OrderMenu extends StatelessWidget {
                     width: 30,
                     height: 30,
                     color: AppColors.white,
-                    child: const Icon(Icons.remove_circle, color: AppColors.primary),
+                    child: const Icon(Icons.remove_circle, color: AppColors.red),
                   ),
                 ),
                 SizedBox(width: 30.0, child: Center(child: Text(data.quantity.toString()))),

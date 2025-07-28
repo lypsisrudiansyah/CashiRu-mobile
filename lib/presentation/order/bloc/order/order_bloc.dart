@@ -50,5 +50,29 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<_Started>((event, emit) {
       emit(const Success('', 0, [], 0, 0));
     });
+
+    on<_AddOrder>((event, emit) async {
+      var currentState = state as Success;
+      try {
+        final response = await orderRemoteDatasource.order(event.order);
+        response.fold((failure) => emit(Failure(failure)), (orderResponse) {
+          if (orderResponse.data != null) {
+            emit(
+              Success(
+                currentState.paymentMethod,
+                currentState.nominalBayar,
+                currentState.orders,
+                currentState.totalQuantity,
+                currentState.total,
+              ),
+            );
+          } else {
+            emit(Failure(orderResponse.message ?? 'Unknown error'));
+          }
+        });
+      } catch (e) {
+        emit(Failure(e.toString()));
+      }
+    });
   }
 }

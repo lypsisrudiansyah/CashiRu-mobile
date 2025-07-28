@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:cashiru/core/components/search_input.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
 import 'package:cashiru/presentation/order/bloc/order/order_bloc.dart' as order_bloc;
 import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
@@ -37,6 +39,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
   bool isOpenBill = false;
   int indexValue = 0;
   int finaltotal = 0;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -60,6 +63,7 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
     searchController.dispose();
     tableNumberController.dispose();
     orderNameController.dispose();
+    _debounce?.cancel();
   }
 
   @override
@@ -79,7 +83,17 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        HomeTitle(controller: searchController, onChanged: (value) {}),
+                        HomeTitle(
+                          controller: searchController,
+                          onChanged: (val) {
+                            if (_debounce?.isActive ?? false) _debounce!.cancel();
+                            _debounce = Timer(const Duration(milliseconds: 300), () {
+                              context.read<product_bloc.ProductBloc>().add(
+                                product_bloc.ProductEvent.searchProducts(val),
+                              );
+                            });
+                          },
+                        ),
                         const SizedBox(height: 24),
                         SizedBox(
                           width: context.deviceWidth,
@@ -216,7 +230,6 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                               ),
                             ],
                           ),
-
                           const SpaceHeight(16.0),
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
