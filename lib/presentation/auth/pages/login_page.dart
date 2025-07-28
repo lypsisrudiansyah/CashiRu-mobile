@@ -3,6 +3,7 @@ import 'package:cashiru/core/extensions/build_context_extension.dart';
 import 'package:cashiru/data/datasource/auth_local_datasource.dart';
 import 'package:cashiru/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
+import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,10 +38,9 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           const SpaceHeight(80.0),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 58.0),
+            padding: EdgeInsets.symmetric(horizontal: context.deviceHeight >= 600 ? 400 : 58.0),
             child: Image.asset(Assets.images.logo.path),
           ),
-
           const SpaceHeight(24.0),
           Center(
             child: Text(
@@ -71,7 +71,10 @@ class _LoginPageState extends State<LoginPage> {
               switch (state) {
                 case Success(data: final loginData):
                   AuthLocalDatasource().saveAuthData(loginData);
-                  context.pushReplacement(const DashboardPage());
+
+                  context.pushReplacement(
+                    context.deviceWidth > 600 ? DashboardTabletPage() : const DashboardPage(),
+                  );
                   break;
                 case Failure(message: final errorMessage):
                   ScaffoldMessenger.of(context).showSnackBar(

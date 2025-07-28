@@ -9,6 +9,7 @@ import 'package:cashiru/presentation/home/bloc/category/category_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/checkout/checkout_bloc.dart';
 import 'package:cashiru/presentation/home/bloc/product/product_bloc.dart';
 import 'package:cashiru/presentation/home/pages/dashboard_page.dart';
+import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,9 +55,12 @@ class MyApp extends StatelessWidget {
             iconTheme: const IconThemeData(color: AppColors.primary),
           ),
         ),
-
         home: FutureBuilder<bool>(
-          future: AuthLocalDatasource().isAuthenticated(),
+          // future: AuthLocalDatasource().isAuthenticated(),
+          future: Future.delayed(
+            Duration(milliseconds: 0),
+            () => AuthLocalDatasource().isAuthenticated(),
+          ).then((value) => value),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
@@ -65,8 +69,8 @@ class MyApp extends StatelessWidget {
               );
             } else if (snapshot.hasData && snapshot.data!) {
               if (context.deviceWidth >= 600) {
-                // * Try This - ShouldBeTablet
-                return DashboardPage();
+                // & Already Tablet
+                return DashboardTabletPage();
               }
               return DashboardPage();
             } else {

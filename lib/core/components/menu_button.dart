@@ -61,6 +61,8 @@ class MenuButton extends StatelessWidget {
                   )
                 : SvgPicture.asset(
                     iconPath,
+                    width: size,
+                    height: size,
                     colorFilter: ColorFilter.mode(
                       isActive ? AppColors.white : AppColors.primary,
                       BlendMode.srcIn,
