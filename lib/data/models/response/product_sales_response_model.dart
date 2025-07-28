@@ -38,7 +38,7 @@ class ProductSales {
       productName: map['product_name'] as String,
       productPrice: double.parse(map['product_price'] as String).toInt(),
       totalQuantity: map['total_quantity'] as String,
-      total: double.parse(map['total_price']),
+      total: double.parse(map['total_item']),
     );
   }
 

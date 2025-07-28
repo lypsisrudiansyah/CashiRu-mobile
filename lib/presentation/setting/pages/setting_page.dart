@@ -57,7 +57,7 @@ class _SettingPageState extends State<SettingPage> {
                       },
 
                       // => context.push(const ReportPage()),
-                      isImage: true,
+                      isImage: false,
                     ),
                   ),
                   const SpaceWidth(15.0),
@@ -68,7 +68,7 @@ class _SettingPageState extends State<SettingPage> {
                       onPressed: () {
                         context.push(const ManagePrinterPage());
                       },
-                      isImage: true,
+                      isImage: false,
                     ),
                   ),
                 ],

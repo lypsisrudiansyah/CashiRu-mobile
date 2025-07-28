@@ -27,7 +27,7 @@ class ReportRemoteDatasource {
       Uri.parse('${Variables.baseUrl}/api/reports/product-sales?start_date=$startDate&end_date=$endDate'),
       headers: {'Authorization': 'Bearer ${authData?.token}', 'Content-Type': 'application/json'},
     );
-
+  print("${response.body.toString() }APA INI");
     if (response.statusCode == 200) {
       return right(ProductSalesResponseModel.fromJson(response.body));
     } else {
