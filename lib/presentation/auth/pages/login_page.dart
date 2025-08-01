@@ -32,13 +32,14 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // print("MY Device widht and height : ${context.deviceWidth} ${context.deviceHeight}");
     return Scaffold(
       body: ListView(
         padding: context.deviceWidth > 600 ? EdgeInsets.symmetric(horizontal: 150, vertical: 16) : const EdgeInsets.all(16.0),
         children: [
           const SpaceHeight(60.0),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.deviceHeight >= 600 ? 290 : 58.0),
+            padding: context.deviceWidth >= 600 ? const EdgeInsets.symmetric(horizontal:  260) : const EdgeInsetsGeometry.all(50),
             child: Image.asset(Assets.images.logo.path),
           ),
           const SpaceHeight(24.0),

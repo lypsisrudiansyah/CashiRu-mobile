@@ -11,6 +11,7 @@ import 'package:cashiru/presentation/tablet/home/pages/dashboard_tablet_page.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:print_bluetooth_thermal/print_bluetooth_thermal.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../core/assets/assets.gen.dart';
 import '../../../core/components/buttons.dart';
@@ -52,22 +53,13 @@ class PaymentSuccessDialog extends StatelessWidget {
                 children: [
                   LabelValue(label: 'Payment Method', value: paymentMethod),
                   const Divider(height: 16.0),
-                  LabelValue(
-                    label: 'Total Quantity',
-                    value: totalQuantity.toString(),
-                  ),
+                  LabelValue(label: 'Total Quantity', value: totalQuantity.toString()),
                   const Divider(height: 16.0),
-                  LabelValue(
-                    label: 'Total Bill',
-                    value: total.currencyFormatRp,
-                  ),
+                  LabelValue(label: 'Total Bill', value: total.currencyFormatRp),
                   // const Divider(height: 16.0),
                   // LabelValue(label: 'Cashier Name', value: 'John Doe'),
                   const Divider(height: 16.0),
-                  LabelValue(
-                    label: 'Transaction Date',
-                    value: DateTime.now().toFormattedTime(),
-                  ),
+                  LabelValue(label: 'Transaction Date', value: DateTime.now().toFormattedTime()),
                   const SpaceHeight(20.0),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -80,12 +72,8 @@ class PaymentSuccessDialog extends StatelessWidget {
                                     // * Try This - ShouldBeTablet
                                     const DashboardTabletPage(),
                                   )
-                                : context.pushReplacement(
-                                    const DashboardPage(),
-                                  );
-                            context.read<CheckoutBloc>().add(
-                              CheckoutEvent.started(),
-                            );
+                                : context.pushReplacement(const DashboardPage());
+                            context.read<CheckoutBloc>().add(CheckoutEvent.started());
 
                             context.read<order_bloc.OrderBloc>().add(
                               order_bloc.OrderEvent.started(),
@@ -98,6 +86,36 @@ class PaymentSuccessDialog extends StatelessWidget {
                       const SpaceWidth(12.0),
                       Flexible(
                         child: Button.outlined(
+                          // onPressed: () async {
+                          //   try {
+                          //     // Pindahkan operasi berat ke background
+                          //     final printValue = await compute((_) {
+                          //       return PrinterService.instance.printOrder(
+                          //         paymentMethod,
+                          //         orders,
+                          //         totalQuantity,
+                          //         total,
+                          //       );
+                          //     }, null);
+
+                          //     // Print operation
+                          //     await PrintBluetoothThermal.writeBytes(printValue);
+
+                          //     // Show success message
+                          //     if (context.mounted) {
+                          //       ScaffoldMessenger.of(
+                          //         context,
+                          //       ).showSnackBar(SnackBar(content: Text('Print successful')));
+                          //     }
+                          //   } catch (e) {
+                          //     // Handle error
+                          //     if (context.mounted) {
+                          //       ScaffoldMessenger.of(
+                          //         context,
+                          //       ).showSnackBar(SnackBar(content: Text('Print failed: $e')));
+                          //     }
+                          //   }
+                          // },
                           onPressed: () async {
                             final printValue = await PrinterService.instance
                                 .printOrder(

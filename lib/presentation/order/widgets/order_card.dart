@@ -112,7 +112,7 @@ class OrderCard extends StatelessWidget {
           padding: const EdgeInsets.only(right: 16.0),
           child: IconButton(
             onPressed: onDeleteTap,
-            icon: const Icon(Icons.highlight_off, color: AppColors.primary),
+            icon:  Icon(Icons.highlight_off, color: AppColors.red.withValues(alpha: 0.5)),
           ),
         ),
       ],

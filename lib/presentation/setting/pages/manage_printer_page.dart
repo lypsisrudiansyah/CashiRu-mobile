@@ -177,7 +177,7 @@ class _ManagePrinterPageState extends State<ManagePrinterPage> {
     //bytes += generator.setGlobalFont(PosFontType.fontA);
     bytes += generator.reset();
 
-    bytes += generator.text('Code with Bahri', styles: const PosStyles(bold: true));
+    bytes += generator.text('CashiRu', styles: const PosStyles(bold: true));
     bytes += generator.text('Reverse text', styles: const PosStyles(reverse: true));
     bytes += generator.text(
       'Underlined text',
@@ -193,7 +193,7 @@ class _ManagePrinterPageState extends State<ManagePrinterPage> {
     );
 
     bytes += generator.text(
-      'FIC Batch 23',
+      'POS APP',
       styles: const PosStyles(height: PosTextSize.size2, width: PosTextSize.size2),
     );
 
