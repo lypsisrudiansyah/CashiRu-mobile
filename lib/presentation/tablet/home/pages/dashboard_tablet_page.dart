@@ -40,10 +40,19 @@ class _DashboardTabletPageState extends State<DashboardTabletPage> {
               child: Container(
                 height: context.deviceHeight - 20.0,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.horizontal(
-                    right: Radius.circular(16.0),
+                  borderRadius: const BorderRadius.horizontal(right: Radius.circular(16.0)),
+
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.primary.withOpacity(1),
+                      AppColors.primary.withOpacity(0.8), // bisa variasi sesuai kebutuhan
+                      AppColors.primary.withOpacity(0.78), // bisa variasi sesuai kebutuhan
+                      AppColors.green.withOpacity(0.5), // bisa variasi sesuai kebutuhan
+                    ],
                   ),
-                  color: AppColors.primary,
+
                   boxShadow: [
                     BoxShadow(
                       offset: const Offset(0, -2),
@@ -92,9 +101,7 @@ class _DashboardTabletPageState extends State<DashboardTabletPage> {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
-                            ),
+                            MaterialPageRoute(builder: (context) => const LoginPage()),
                           );
                         },
                         icon: const Icon(Icons.logout, color: AppColors.white),

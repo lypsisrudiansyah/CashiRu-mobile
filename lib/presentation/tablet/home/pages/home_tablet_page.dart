@@ -467,40 +467,43 @@ class _HomeTabletPageState extends State<HomeTabletPage> {
                                     width: context.deviceWidth,
                                   ),
                                 )
-                              : ColoredBox(
-                                  color: AppColors.white,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0,
-                                      vertical: 16.0,
-                                    ),
-                                    child: Button.filled(
-                                      onPressed: () {
-                                        if (indexValuePayment.value == 0) {
-                                        } else if (indexValuePayment.value == 1) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => PaymentCashDialog(
-                                              price: finalTotalPrice,
-                                              isTablet: true,
-                                            ),
-                                          );
-                                        } else if (indexValuePayment.value == 2) {
-                                          // Todo : Implement Another Type Dialog
-                                          // showDialog(
-                                          //   context: context,
-                                          //   barrierDismissible: false,
-                                          //   builder: (context) => PaymentQrisDialog(
-                                          //     price: finalTotalPrice,
-                                          //     isTablet: true,
-                                          //   ),
-                                          // );
-                                        }
-                                      },
-                                      label: 'Payment',
+                              : ClipRRect(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                child: ColoredBox(
+                                    color: AppColors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24.0,
+                                        vertical: 16.0,
+                                      ),
+                                      child: Button.filled(
+                                        onPressed: () {
+                                          if (indexValuePayment.value == 0) {
+                                          } else if (indexValuePayment.value == 1) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => PaymentCashDialog(
+                                                price: finalTotalPrice,
+                                                isTablet: true,
+                                              ),
+                                            );
+                                          } else if (indexValuePayment.value == 2) {
+                                            // Todo : Implement Another Type Dialog
+                                            // showDialog(
+                                            //   context: context,
+                                            //   barrierDismissible: false,
+                                            //   builder: (context) => PaymentQrisDialog(
+                                            //     price: finalTotalPrice,
+                                            //     isTablet: true,
+                                            //   ),
+                                            // );
+                                          }
+                                        },
+                                        label: 'Payment',
+                                      ),
                                     ),
                                   ),
-                                ),
+                              ),
                         );
                       },
                     ),
